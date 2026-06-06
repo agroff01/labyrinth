@@ -193,6 +193,12 @@
       },
       "url": "https://packages.unity.com"
     },
+    "today.comes.saintsfield": {
+      "version": "file:today.comes.saintsfield",
+      "depth": 0,
+      "source": "embedded",
+      "dependencies": {}
+    },
     "com.unity.modules.accessibility": {
       "version": "1.0.0",
       "depth": 0,

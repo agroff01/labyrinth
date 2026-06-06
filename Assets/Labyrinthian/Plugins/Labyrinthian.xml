@@ -1,0 +1,1859 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Labyrinthian</name>
+    </assembly>
+    <members>
+        <member name="T:Labyrinthian.DisjointSet`1">
+            <summary>
+            Union-Find data structure. Inspired by <seealso href="https://github.com/mondrasovic/UnionFind"/>
+            </summary>
+        </member>
+        <member name="M:Labyrinthian.DisjointSet`1.Add(`0)">
+            <summary>
+            Add a new element.
+            </summary>
+            <returns>
+            <see langword="true"/> if element was added;
+            <see langword="false"/> otherwise if element was already present.
+            </returns>
+        </member>
+        <member name="M:Labyrinthian.DisjointSet`1.Find(`0)">
+            <summary>
+            Follows the chain of parent pointers from a specified query 
+            node <paramref name="x"/> until it reaches a root element.
+            </summary>
+            <returns>The root element of the <paramref name="x"/>.</returns>
+        </member>
+        <member name="M:Labyrinthian.DisjointSet`1.Union(`0,`0)">
+            <summary>
+            Replaces the set containing <paramref name="x"/>
+            and the set containing <paramref name="y"/> with their union.
+            </summary>
+            <returns>
+            <see langword="true" /> if two sets were merged;
+            <see langword="false"/> otherwise if two sets were already merged.
+            </returns>
+            <exception cref="T:System.Collections.Generic.KeyNotFoundException" />
+        </member>
+        <member name="M:Labyrinthian.DisjointSet`1.Contains(`0)">
+            <summary>
+            Check whether the <paramref name="element"/> exists in the set
+            </summary>
+            <returns>
+            <see langword="true"/> if <paramref name="element"/> exists;
+            <see langword="false"/> otherwises.
+            </returns>
+        </member>
+        <member name="T:Labyrinthian.MarkedCells">
+            <summary>
+            <para>
+            Data structure that represents a Boolean array and accepts MazeCell as index.
+            </para>
+            <para>
+            Can be used in DFS/BFS algorithms to store the visited/unvisited state of each maze cell.
+            </para>
+            </summary>
+        </member>
+        <member name="E:Labyrinthian.MarkedCells.MarkChanged">
+            <summary>
+            Event that is raised when the state of a cell changes.
+            </summary>
+        </member>
+        <member name="M:Labyrinthian.MarkedCells.#ctor(Labyrinthian.Maze,System.Boolean)">
+            <summary>
+            Create a MarkedCells data structure.
+            </summary>
+            <param name="maze">Maze, which cells will be stored</param>
+            <param name="value">Initial value of each cell</param>
+        </member>
+        <member name="P:Labyrinthian.MarkedCells.Item(Labyrinthian.MazeCell)">
+            <summary>
+            Get the state of a cell. This method does not handle exceptions
+            when the cell is not part of the maze or is from another maze.
+            </summary>
+            <param name="cell">The cell whose state will be returned.</param>
+            <returns>true/false state of cell</returns>
+        </member>
+        <member name="M:Labyrinthian.MarkedCells.SetAll(System.Boolean)">
+            <summary>
+            Set the state of each cell to the specified value.
+            </summary>
+        </member>
+        <member name="T:Labyrinthian.StaticUnorderedList`1">
+            <summary>
+            A list with fast access time by index, supporting fast removal(by index) and addition without
+            saving the order of elements. Capacity cannot be changed.
+            </summary>
+        </member>
+        <member name="P:Labyrinthian.StaticUnorderedList`1.Count">
+            <summary>
+            The number of available elements.
+            </summary>
+        </member>
+        <member name="F:Labyrinthian.StaticUnorderedList`1.Capacity">
+            <summary>
+            The maximum number of available elements(cannot be changed).
+            </summary>
+        </member>
+        <member name="M:Labyrinthian.StaticUnorderedList`1.IndexOf(`0)">
+            <summary>
+            Find the index of a specific element.
+            An O(N) operation.
+            </summary>
+            <param name="item">The element to search for.</param>
+            <returns>The index of the 'item' element, or -1 if not found.</returns>
+        </member>
+        <member name="M:Labyrinthian.StaticUnorderedList`1.Insert(System.Int32,`0)">
+            <summary>
+            Insert an element at a specific index.
+            An O(1) operation; the previous element at the given index moves to the end.
+            </summary>
+            <param name="index">The index where the element should be inserted.</param>
+            <param name="item">The element to insert.</param>
+            <exception cref="T:System.IndexOutOfRangeException" />
+        </member>
+        <member name="M:Labyrinthian.StaticUnorderedList`1.Remove(`0)">
+            <summary>
+            Remove an element from the list.
+            An O(N) operation.
+            </summary>
+            <param name="item">The element to remove.</param>
+            <returns>True if the element was removed, false if the element does not exist.</returns>
+        </member>
+        <member name="M:Labyrinthian.StaticUnorderedList`1.RemoveAt(System.Int32)">
+            <summary>
+            Remove an element at the specified index. After the operation, the last element 
+            of the list moves to the position of the removed element.
+            An O(1) operation.
+            </summary>
+            <param name="index">The index of the element to remove.</param>
+        </member>
+        <member name="M:Labyrinthian.StaticUnorderedList`1.Add(`0)">
+            <summary>
+            Add an element to the end.
+            An O(1) operation.
+            </summary>
+            <param name="item">The element to add.</param>
+            <exception cref="T:System.IndexOutOfRangeException" />
+        </member>
+        <member name="M:Labyrinthian.StaticUnorderedList`1.Pop(System.Int32)">
+            <summary>
+            Get an element from the list and remove it.
+            </summary>
+            <param name="index">The index of the element.</param>
+            <returns>The element at the specified index.</returns>
+        </member>
+        <member name="M:Labyrinthian.StaticUnorderedList`1.Clear">
+            <summary>
+            Clear the list.
+            </summary>
+        </member>
+        <member name="M:Labyrinthian.StaticUnorderedList`1.Contains(`0)">
+            <summary>
+            Check if an element exists in the list.
+            </summary>
+            <param name="item">The element to check for existence.</param>
+            <returns>True if the element exists, otherwise false.</returns>
+        </member>
+        <member name="M:Labyrinthian.StaticUnorderedList`1.CopyTo(`0[],System.Int32)">
+            <summary>
+            Copy the list to an array.
+            </summary>
+            <param name="array">The array to copy the list into.</param>
+            <param name="arrayIndex">The starting index in the array.</param>
+        </member>
+        <member name="P:Labyrinthian.StaticUnorderedList`1.Item(System.Int32)">
+            <summary>
+            Get element of the list by the index.
+            </summary>
+            <returns>
+            Element of the list with the given index.
+            </returns>
+            <exception cref="T:System.IndexOutOfRangeException"/>
+        </member>
+        <member name="T:Labyrinthian.DirectedMaze">
+            <summary>
+            A wrapper of the <see cref="T:Labyrinthian.Maze" /> class which supports directed edges.
+            </summary>
+            <remarks>
+            Note that this class does not track changes to the maze edges made outside of it.
+            </remarks>
+        </member>
+        <member name="P:Labyrinthian.DirectedMaze.Maze">
+            <summary>
+            Get an original maze.
+            </summary>
+        </member>
+        <member name="P:Labyrinthian.DirectedMaze.EdgesDirections">
+            <summary>
+            Gets a dictionary which defines a direction of each maze edge.
+            </summary>
+            <remarks>
+            If an edge has a value <see langword="false" />, then direction is Cell1 -> Cell2, 
+            otherwise it's Cell2 -> Cell1.
+            </remarks>
+        </member>
+        <member name="P:Labyrinthian.DirectedMaze.DirectedEdges">
+            <summary>
+            Get an enumerable of directed edges.
+            </summary>
+        </member>
+        <member name="M:Labyrinthian.DirectedMaze.#ctor(Labyrinthian.Maze)">
+            <summary>
+            Construct a directed maze based on a maze. 
+            Note that existing edges will be ignored and will not appear in
+            <see cref="P:Labyrinthian.DirectedMaze.EdgesDirections" /> unless added within this class.
+            </summary>
+            <param name="maze">A maze to be based on.</param>
+        </member>
+        <member name="M:Labyrinthian.DirectedMaze.ConnectCells(Labyrinthian.MazeCell,Labyrinthian.MazeCell)">
+            <summary>
+            Add/update a relation cell1 -> cell2 and carve a passage between the cells in the maze.
+            </summary>
+            <param name="cell1">A start cell.</param>
+            <param name="cell2">An end cell.</param>
+        </member>
+        <member name="M:Labyrinthian.DirectedMaze.DisconnectCells(Labyrinthian.MazeCell,Labyrinthian.MazeCell)">
+            <summary>
+            Remove a relation cell1 -> cell2 and create a wall between the cells in the maze.
+            </summary>
+            <remarks>
+            If relation cell2 -> cell1 exists instead of cell1 -> cell2, then nothing will change.
+            </remarks>
+            <param name="cell1">A start cell.</param>
+            <param name="cell2">An end cell.</param>
+        </member>
+        <member name="T:Labyrinthian.CellIsOuterException">
+            <summary>
+            Exception that is thrown when the maze cell is unexpected to be outer.
+            </summary>
+        </member>
+        <member name="M:Labyrinthian.CellIsOuterException.#ctor">
+            <summary>
+            Constructor with default message.
+            </summary>
+        </member>
+        <member name="M:Labyrinthian.CellIsOuterException.#ctor(System.String)">
+            <summary>
+            Constructor with custom message.
+            </summary>
+        </member>
+        <member name="M:Labyrinthian.CellIsOuterException.#ctor(System.String,System.String)">
+            <summary>
+            Constructor which will generate a message based on <paramref name="variableName"/>.
+            </summary>
+            <param name="variableName">Name of variable that represents outer cell.</param>
+            <param name="extraMessage">An extra message for exception(optional).</param>
+        </member>
+        <member name="T:Labyrinthian.CellsAreNotNeighborsException">
+            <summary>
+            Exception that is thrown when two cells are unexpectedly not neighbors.
+            </summary>
+        </member>
+        <member name="M:Labyrinthian.CellsAreNotNeighborsException.#ctor(Labyrinthian.MazeCell,Labyrinthian.MazeCell,System.String)">
+            <summary>
+            Constructor that creates an exception with message that
+            contains indices of two specified cells.
+            </summary>
+            <param name="cell1">First cell. Cannot be <see langword="null"/>.</param>
+            <param name="cell2">Second cell. Cannot be <see langword="null"/>.</param>
+            <param name="extraMessage">An extra message(optional).</param>
+        </member>
+        <member name="T:Labyrinthian.InvalidGridIndexException">
+            <summary>
+            Exception that is thrown when an index of the grid of the <see cref="T:Labyrinthian.MultiGridMaze2D"/> is invalid.
+            </summary>
+        </member>
+        <member name="M:Labyrinthian.InvalidGridIndexException.#ctor">
+            <summary>
+            Constructor with default message.
+            </summary>
+        </member>
+        <member name="M:Labyrinthian.InvalidGridIndexException.#ctor(System.String)">
+            <summary>
+            Constructor with custom message.
+            </summary>
+            <param name="message">Custom message.</param>
+        </member>
+        <member name="T:Labyrinthian.InvalidWallDirectionException">
+            <summary>
+            Exception that is thrown when a wall direction is invalid.
+            </summary>
+        </member>
+        <member name="M:Labyrinthian.InvalidWallDirectionException.#ctor">
+            <summary>
+            Constructor with default message.
+            </summary>
+        </member>
+        <member name="M:Labyrinthian.InvalidWallDirectionException.#ctor(System.String)">
+            <summary>
+            Constructor with custom message.
+            </summary>
+            <param name="message">Custom message.</param>
+        </member>
+        <member name="T:Labyrinthian.MazeTypeIsNotSupportedException">
+            <summary>
+            Exception that is thrown when the generator doesn't support the maze.
+            </summary>
+        </member>
+        <member name="M:Labyrinthian.MazeTypeIsNotSupportedException.#ctor(Labyrinthian.MazeGenerator,Labyrinthian.Maze)">
+            <summary>
+            Constructor that will generate message based on <paramref name="generator"/> and <paramref name="maze"/>.
+            </summary>
+            <param name="generator">Generator that has thrown this exception(cannot be <see langword="null"/>).</param>
+            <param name="maze">Maze, which <paramref name="generator"/> doesn't support.</param>
+        </member>
+        <member name="M:Labyrinthian.MazeTypeIsNotSupportedException.#ctor(System.String)">
+            <summary>
+            Constructor with custom message.
+            </summary>
+            <param name="message">Custom message.</param>
+        </member>
+        <member name="T:Labyrinthian.PathNotFoundException">
+            <summary>
+            Exception that is thrown when path in the maze cannot be found.
+            </summary>
+        </member>
+        <member name="M:Labyrinthian.PathNotFoundException.#ctor">
+            <summary>
+            Constructor with default message.
+            </summary>
+        </member>
+        <member name="M:Labyrinthian.PathNotFoundException.#ctor(System.String)">
+            <summary>
+            Constructor with custom message.
+            </summary>
+            <param name="message">Custom message.</param>
+        </member>
+        <member name="T:Labyrinthian.AldousBroderGeneration">
+            <summary>
+            Maze generator that uses Aldous Broder algorithm.
+            </summary>
+        </member>
+        <member name="M:Labyrinthian.AldousBroderGeneration.#ctor(Labyrinthian.Maze,Labyrinthian.MazeCell,Labyrinthian.INeighborSelector)">
+            <summary>
+            Construct a generator with a default seed.
+            </summary>
+            <param name="maze">Maze used for generation.</param>
+            <param name="initialCell">Cell that will be current at the start of generation(optional).</param>
+            <param name="neighborSelector">An optional neighbor selector.</param>
+            <exception cref="T:Labyrinthian.MazeTypeIsNotSupportedException"></exception>
+        </member>
+        <member name="M:Labyrinthian.AldousBroderGeneration.#ctor(Labyrinthian.Maze,System.Int32,Labyrinthian.MazeCell,Labyrinthian.INeighborSelector)">
+            <summary>
+            Construct a generator with specified seed.
+            </summary>
+            <param name="maze">Maze used for generation.</param>
+            <param name="seed">Seed for random numbers generator.</param>
+            <param name="initialCell">Cell that will be current at the start of generation(optional).</param>
+            <param name="neighborSelector">An optional neighbor selector.</param>
+        </member>
+        <member name="T:Labyrinthian.BinaryTreeGeneration">
+            <summary>
+            Maze generator that uses Binary tree algorithm.
+            Can be used only for <see cref="T:Labyrinthian.OrthogonalMaze"/>.
+            </summary>
+        </member>
+        <member name="M:Labyrinthian.BinaryTreeGeneration.#ctor(Labyrinthian.Maze)">
+            <inheritdoc cref="M:Labyrinthian.MazeGenerator.#ctor(Labyrinthian.Maze,Labyrinthian.MazeCell,System.Boolean)" />
+        </member>
+        <member name="M:Labyrinthian.BinaryTreeGeneration.#ctor(Labyrinthian.Maze,System.Int32)">
+            <inheritdoc cref="M:Labyrinthian.MazeGenerator.#ctor(Labyrinthian.Maze,System.Int32,Labyrinthian.MazeCell,System.Boolean)" />
+        </member>
+        <member name="T:Labyrinthian.DFSGeneration">
+            <summary>
+            Maze generator that uses randomized Depth-first search algorithm.
+            </summary>
+        </member>
+        <member name="M:Labyrinthian.DFSGeneration.#ctor(Labyrinthian.Maze,Labyrinthian.MazeCell)">
+            <inheritdoc cref="M:Labyrinthian.MazeGenerator.#ctor(Labyrinthian.Maze,Labyrinthian.MazeCell,System.Boolean)" />
+        </member>
+        <member name="M:Labyrinthian.DFSGeneration.#ctor(Labyrinthian.Maze,System.Int32,Labyrinthian.MazeCell)">
+            <inheritdoc cref="M:Labyrinthian.MazeGenerator.#ctor(Labyrinthian.Maze,System.Int32,Labyrinthian.MazeCell,System.Boolean)" />
+        </member>
+        <member name="T:Labyrinthian.EdgeBasedPrimGeneration">
+            <summary>
+            Maze generator that uses Edge-based Prim's algorithm.
+            </summary>
+        </member>
+        <member name="M:Labyrinthian.EdgeBasedPrimGeneration.#ctor(Labyrinthian.Maze,Labyrinthian.MazeCell)">
+            <inheritdoc cref="M:Labyrinthian.MazeGenerator.#ctor(Labyrinthian.Maze,Labyrinthian.MazeCell,System.Boolean)" />
+        </member>
+        <member name="M:Labyrinthian.EdgeBasedPrimGeneration.#ctor(Labyrinthian.Maze,System.Int32,Labyrinthian.MazeCell)">
+            <inheritdoc cref="M:Labyrinthian.MazeGenerator.#ctor(Labyrinthian.Maze,System.Int32,Labyrinthian.MazeCell,System.Boolean)" />
+        </member>
+        <member name="T:Labyrinthian.GrowingTreeGeneration">
+            <summary>
+            Maze generator that uses Growing tree algorithm.
+            </summary>
+        </member>
+        <member name="M:Labyrinthian.GrowingTreeGeneration.#ctor(Labyrinthian.Maze,Labyrinthian.MazeCellSelection,Labyrinthian.MazeCell)">
+            <inheritdoc cref="M:Labyrinthian.MazeGeneratorWithCustomSelection.#ctor(Labyrinthian.Maze,Labyrinthian.MazeCellSelection,Labyrinthian.MazeCell,System.Boolean)"/>
+        </member>
+        <member name="M:Labyrinthian.GrowingTreeGeneration.#ctor(Labyrinthian.Maze,System.Int32,Labyrinthian.MazeCellSelection,Labyrinthian.MazeCell)">
+            <inheritdoc cref="M:Labyrinthian.MazeGeneratorWithCustomSelection.#ctor(Labyrinthian.Maze,System.Int32,Labyrinthian.MazeCellSelection,Labyrinthian.MazeCell,System.Boolean)"/>
+        </member>
+        <member name="T:Labyrinthian.HuntAndKillGeneration">
+            <summary>
+            Maze generator that uses Hunt and Kill algorithm.
+            </summary>
+        </member>
+        <member name="M:Labyrinthian.HuntAndKillGeneration.#ctor(Labyrinthian.Maze,Labyrinthian.MazeCell)">
+            <inheritdoc cref="M:Labyrinthian.MazeGenerator.#ctor(Labyrinthian.Maze,Labyrinthian.MazeCell,System.Boolean)" />
+        </member>
+        <member name="M:Labyrinthian.HuntAndKillGeneration.#ctor(Labyrinthian.Maze,System.Int32,Labyrinthian.MazeCell)">
+            <inheritdoc cref="M:Labyrinthian.MazeGenerator.#ctor(Labyrinthian.Maze,System.Int32,Labyrinthian.MazeCell,System.Boolean)" />
+        </member>
+        <member name="T:Labyrinthian.IDirectedGraphGenerator">
+            <summary>
+            An interface for generators which use directed graphs.
+            </summary>
+        </member>
+        <member name="P:Labyrinthian.IDirectedGraphGenerator.DirectedMaze">
+            <summary>
+            Get a directed maze.
+            </summary>
+        </member>
+        <member name="T:Labyrinthian.KruskalGeneration">
+            <summary>
+            Maze generator that uses randomized Kruskal's algorithm.
+            </summary>
+        </member>
+        <member name="M:Labyrinthian.KruskalGeneration.#ctor(Labyrinthian.Maze)">
+            <inheritdoc cref="M:Labyrinthian.MazeGenerator.#ctor(Labyrinthian.Maze,Labyrinthian.MazeCell,System.Boolean)" />
+        </member>
+        <member name="M:Labyrinthian.KruskalGeneration.#ctor(Labyrinthian.Maze,System.Int32)">
+            <inheritdoc cref="M:Labyrinthian.MazeGenerator.#ctor(Labyrinthian.Maze,System.Int32,Labyrinthian.MazeCell,System.Boolean)" />
+        </member>
+        <member name="T:Labyrinthian.MazeGenerator">
+            <summary>
+            Class for step-by-step visualization of maze generation process.
+            </summary>
+            <example>
+            This code snippet demonstrates the creation and generation of an orthogonal maze using Prim's algorithm:
+            <code>
+            using Labyrinthian;
+            
+            // Create an orthogonal maze 30x20
+            Maze maze = new OrthogonalMaze(30, 20);
+            // Generate it using Prim's algorithm
+            MazeGenerator generator = new PrimGeneration(maze);
+            generator.Generate();
+            </code>
+            </example>
+        </member>
+        <member name="F:Labyrinthian.MazeGenerator.Rnd">
+            <summary>
+            Random numbers generator used for generation.
+            </summary>
+        </member>
+        <member name="F:Labyrinthian.MazeGenerator.Maze">
+            <summary>
+            Maze that is currently generating.
+            </summary>
+        </member>
+        <member name="F:Labyrinthian.MazeGenerator.HighlightedCells">
+            <summary>
+            Markers for highlighted cells. Used for visualization.
+            </summary>
+        </member>
+        <member name="F:Labyrinthian.MazeGenerator.VisitedCells">
+            <summary>
+            Markers for visited cells. Used for visualization.
+            </summary>
+        </member>
+        <member name="P:Labyrinthian.MazeGenerator.SelectedCell">
+            <summary>
+            Cell that is marked as current.
+            </summary>
+            <remarks>
+            <para>
+            Can be <see langword="null"/> if no cell is marked as current.
+            </para>
+            <para>
+            This value isn't intended to be changed outside of <see cref="T:Labyrinthian.MazeGenerator"/> or <see cref="T:Labyrinthian.IMazePostProcessor"/>.
+            </para>
+            </remarks>
+        </member>
+        <member name="F:Labyrinthian.MazeGenerator.PostProcessors">
+            <summary>
+            Post processors that will be used and visualized right after maze generation.
+            </summary>
+        </member>
+        <member name="E:Labyrinthian.MazeGenerator.CellStateChanged">
+            <summary>
+            <para>
+            Event that's raised when state of the cell is changed.
+            </para>
+            <para>
+            Changings made to one of these properties will raise this event:
+            <list type="bullet">
+            <item><see cref="F:Labyrinthian.MazeGenerator.HighlightedCells"/></item>
+            <item><see cref="F:Labyrinthian.MazeGenerator.VisitedCells"/></item>
+            <item><see cref="P:Labyrinthian.MazeGenerator.SelectedCell"/></item>
+            </list>
+            </para>
+            </summary>
+        </member>
+        <member name="M:Labyrinthian.MazeGenerator.#ctor(Labyrinthian.Maze,Labyrinthian.MazeCell,System.Boolean)">
+            <summary>
+            Construct a generator with a default seed.
+            </summary>
+            <param name="maze">Maze used for generation.</param>
+            <param name="initialCell">Cell that will be current at the start of generation(optional).</param>
+            <param name="defaultVisited">Default 'visited' state for all cells(false by default).</param>
+            <exception cref="T:Labyrinthian.MazeTypeIsNotSupportedException"></exception>
+        </member>
+        <member name="M:Labyrinthian.MazeGenerator.#ctor(Labyrinthian.Maze,System.Int32,Labyrinthian.MazeCell,System.Boolean)">
+            <summary>
+            Construct a generator with specified seed.
+            </summary>
+            <param name="maze">Maze used for generation.</param>
+            <param name="seed">Seed for random numbers generator.</param>
+            <param name="initialCell">Cell that will be current at the start of generation(optional).</param>
+            <param name="defaultVisited">Default 'visited' state for all cells(false by default).</param>
+            <exception cref="T:Labyrinthian.MazeTypeIsNotSupportedException"></exception>
+        </member>
+        <member name="M:Labyrinthian.MazeGenerator.GetRandomCell">
+            <summary>
+            Get random cell of the maze.
+            </summary>
+            <returns>Random cell of the maze.</returns>
+        </member>
+        <member name="M:Labyrinthian.MazeGenerator.ApplyPostProcessorsStepByStep">
+            <summary>
+            Apply all post processors.
+            </summary>
+            <returns>Step-by-step maze post processing.</returns>
+        </member>
+        <member name="M:Labyrinthian.MazeGenerator.IsSuitableFor(Labyrinthian.Maze)">
+            <summary>
+            Check whether the maze is supported for this generation algorithm.
+            This method is called inside the constructor.
+            Override it if your maze generation algorithm can be used only for
+            some specific maze types.
+            </summary>
+            <returns>
+            <see langword="true"/> if maze is supported;
+            <see langword="false"/> otherwise if maze is not supported
+            </returns>
+        </member>
+        <member name="M:Labyrinthian.MazeGenerator.Generation">
+            <summary>
+            Step-by-step generation of maze.
+            </summary>
+            <returns>Each step of the generation process.</returns>
+        </member>
+        <member name="M:Labyrinthian.MazeGenerator.GenerateStepByStep">
+            <summary>
+            Step-by-step generation of maze. 
+            All post processors from <see cref="F:Labyrinthian.MazeGenerator.PostProcessors" /> will be applied.
+            </summary>
+            <returns>Each step of the generation process.</returns>
+        </member>
+        <member name="M:Labyrinthian.MazeGenerator.Generate">
+            <summary>
+            Generate maze. 
+            All post processors from <see cref="F:Labyrinthian.MazeGenerator.PostProcessors" /> will be applied.
+            </summary>
+            <remarks>
+            By default it just returns the last element of <see cref="M:Labyrinthian.MazeGenerator.GenerateStepByStep"/>.
+            You can override this method to optimize generation process without step-by-step
+            visualisation.
+            </remarks>
+            <example>
+            Overriding method:
+            <code>
+            public override Maze Generate()
+            {
+                // [Maze generation process here]
+                
+                return ApplyPostProcessorsStepByStep().Last();
+            }
+            </code>
+            </example>
+            <returns>Generated maze.</returns>
+        </member>
+        <member name="M:Labyrinthian.MazeGenerator.IsSuitableForSidewinder(Labyrinthian.Maze)">
+            <summary>
+            Check whether maze is suitable for Sidewinder and Recursive division algorithms.
+            </summary>
+            <param name="maze">Maze to be checked.</param>
+        </member>
+        <member name="M:Labyrinthian.MazeGenerator.ToString">
+            <summary>
+            Get user-friendly algorithm's name.
+            </summary>
+            <returns>User-friendly algorithm's name</returns>
+        </member>
+        <member name="T:Labyrinthian.MazeCellSelection">
+            <summary>
+            Function that's used for selecting a cell from a list.
+            </summary>
+            <param name="rnd">
+            Random numbers generator used for selecting a cell(cannot be <see langword="null"/>).
+            </param>
+            <param name="count">Size of the list</param>
+            <returns>Index of the selected cell in the list.</returns>
+            <example>
+            Select the newest cell:
+            <code>MazeCellSelection newestCell = (rnd, count) => count - 1;</code>
+            </example>
+            <example>
+            Select the oldest cell:
+            <code>MazeCellSelection newestCell = (rnd, count) => 0;</code>
+            </example>
+            <example>
+            Select a random cell:
+            <code>MazeCellSelection newestCell = (rnd, count) => rnd.Next(count);</code>
+            </example>
+        </member>
+        <member name="T:Labyrinthian.MazeGeneratorWithCustomSelection">
+            <summary>
+            <para>
+            Maze generator with custom selection.
+            </para>
+            <para>
+            Algorithms that inherit this class:
+            <list type="bullet">
+            <item><see cref="T:Labyrinthian.RecursiveBacktrackerGeneration"/></item>
+            <item><see cref="T:Labyrinthian.GrowingTreeGeneration"/></item>
+            </list>
+            </para>
+            </summary>
+        </member>
+        <member name="F:Labyrinthian.MazeGeneratorWithCustomSelection.RandomSelection">
+            <summary>
+            Random selection of a cell.
+            </summary>
+        </member>
+        <member name="F:Labyrinthian.MazeGeneratorWithCustomSelection.Selection">
+            <summary>
+            Cell selection used inside the algorithm.
+            </summary>
+        </member>
+        <member name="M:Labyrinthian.MazeGeneratorWithCustomSelection.#ctor(Labyrinthian.Maze,System.Int32,Labyrinthian.MazeCellSelection,Labyrinthian.MazeCell,System.Boolean)">
+            <summary>
+            Constructor with specified seed.
+            </summary>
+            <param name="maze">Maze used for generation.</param>
+            <param name="seed">Seed for random numbers generator.</param>
+            <param name="selection">Selection used for generation(optional).</param>
+            <param name="initialCell">Cell that will be current at the start of generation(optional).</param>
+            <param name="defaultVisited">Default visited state for all cells.</param>
+            <exception cref="T:Labyrinthian.MazeTypeIsNotSupportedException"></exception>
+        </member>
+        <member name="M:Labyrinthian.MazeGeneratorWithCustomSelection.#ctor(Labyrinthian.Maze,Labyrinthian.MazeCellSelection,Labyrinthian.MazeCell,System.Boolean)">
+            <summary>
+            Constructor with specified seed.
+            </summary>
+            <param name="maze">Maze used for generation.</param>
+            <param name="selection">Selection used for generation(optional).</param>
+            <param name="initialCell">Cell that will be current at the start of generation(optional).</param>
+            <param name="defaultVisited">Default visited state for all cells.</param>
+            <exception cref="T:Labyrinthian.MazeTypeIsNotSupportedException"></exception>
+        </member>
+        <member name="T:Labyrinthian.HeatMapDecayFunctions">
+            <summary>
+            Provides various decay functions for adjusting heat map values.
+            </summary>
+        </member>
+        <member name="M:Labyrinthian.HeatMapDecayFunctions.Linear(System.Double)">
+            <summary>
+            Create a linear decay function for the heat map values.
+            </summary>
+            <param name="delta">Amount to decrement the temperature by each time.</param>
+            <returns>A function that performs linear decay on a <see cref="T:Labyrinthian.HeatMapValue"/>.</returns>
+        </member>
+        <member name="M:Labyrinthian.HeatMapDecayFunctions.Exponential(System.Double)">
+            <summary>
+            Create an exponential decay function for the heat map values.
+            </summary>
+            <param name="alpha">Decay constant for exponential decay (must be positive or 0).</param>
+            <returns>A function that performs exponential decay on a <see cref="T:Labyrinthian.HeatMapValue"/>.</returns>
+            <exception cref="T:System.ArgumentOutOfRangeException">Thrown when <paramref name="alpha"/> is not positive.</exception>
+        </member>
+        <member name="M:Labyrinthian.HeatMapDecayFunctions.Multiplicative(System.Double)">
+            <summary>
+            Create a multiplicative decay function for the heat map values.
+            </summary>
+            <param name="alpha">Decay factor for multiplicative decay (must be within the range [0, 1]).</param>
+            <returns>A function that performs multiplicative decay on a <see cref="T:Labyrinthian.HeatMapValue"/>.</returns>
+            <exception cref="T:System.ArgumentOutOfRangeException">Thrown when <paramref name="alpha"/> is outside the valid range.</exception>
+        </member>
+        <member name="M:Labyrinthian.HeatMapDecayFunctions.InverseVisit">
+            <summary>
+            Create an inverse visit count decay function for the heat map values.
+            </summary>
+            <returns>A function that performs inverse visit count decay on a <see cref="T:Labyrinthian.HeatMapValue"/>.</returns>
+        </member>
+        <member name="M:Labyrinthian.HeatMapDecayFunctions.Logarithmic(System.Double)">
+            <summary>
+            Create a logarithmic decay function for the heat map values.
+            </summary>
+            <param name="logBase">Base of the logarithm (must be greater than 1).</param>
+            <returns>A function that performs logarithmic decay on a <see cref="T:Labyrinthian.HeatMapValue"/>.</returns>
+            <exception cref="T:System.ArgumentOutOfRangeException">Thrown when <paramref name="logBase"/> is not greater than 1.</exception>
+        </member>
+        <member name="T:Labyrinthian.HeatMapValue">
+            <summary>
+            Struct which represents a value in a heat map.
+            </summary>
+        </member>
+        <member name="F:Labyrinthian.HeatMapValue.Temperature">
+            <summary>
+            Heat map temperature (value), should not be negative.
+            </summary>
+        </member>
+        <member name="F:Labyrinthian.HeatMapValue.VisitsCount">
+            <summary>
+            Number of visits to the cell.
+            </summary>
+        </member>
+        <member name="T:Labyrinthian.HeatMapNeighborSelector">
+            <summary>
+            A weighted random neighbor selector which uses heat maps for cells.
+            </summary>
+        </member>
+        <member name="F:Labyrinthian.HeatMapNeighborSelector._heatmap">
+            <summary>
+            A heatmap for each maze cell, negative numbers may cause undefined behaviour.
+            </summary>
+        </member>
+        <member name="T:Labyrinthian.INeighborSelector">
+            <summary>
+            Neighbors selector for random walk algorithms (Aldous Broder and Origin Shift).
+            </summary>
+        </member>
+        <member name="M:Labyrinthian.INeighborSelector.Init(Labyrinthian.Maze,System.Random)">
+            <summary>
+            Initialize the neighbor selector with the given maze and random number generator.
+            </summary>
+            <param name="maze">The maze in which the neighbor selection will occur.</param>
+            <param name="rnd">The random number generator to use for selecting neighbors.</param>
+        </member>
+        <member name="M:Labyrinthian.INeighborSelector.Select(Labyrinthian.MazeCell)">
+            <summary>
+            Select a neighboring cell based on the current cell provided.
+            </summary>
+            <param name="cell">The current cell from which a neighbor is to be selected.</param>
+            <returns>The selected neighboring cell.</returns>
+        </member>
+        <member name="T:Labyrinthian.UnweightedNeighborSelector">
+            <summary>
+            An unweighted random neighbor selector for random walk 
+            algorithms (Aldous Broder and Origin Shift).
+            </summary>
+        </member>
+        <member name="P:Labyrinthian.OriginShiftParams.MaxIterations">
+            <summary>
+            Get/set the max algorithm's iterations number.
+            If the value is negative, there is no iterations limit.
+            </summary>
+        </member>
+        <member name="P:Labyrinthian.OriginShiftParams.GenerateUntilAllCellsAreVisited">
+            <summary>
+            Get/set a flag which determines whether a generation should be stopped when
+            all cells were visited.
+            </summary>
+        </member>
+        <member name="P:Labyrinthian.OriginShiftParams.NeighborSelector">
+            <summary>
+            Get/set a neighbor selector.
+            </summary>
+        </member>
+        <member name="T:Labyrinthian.OriginShiftGeneration">
+            <summary>
+            Maze generator that uses Origin Shift algorithm.
+            Algorithm's author: https://github.com/CaptainLuma.
+            </summary>
+        </member>
+        <member name="M:Labyrinthian.OriginShiftGeneration.#ctor(Labyrinthian.Maze,Labyrinthian.OriginShiftParams,Labyrinthian.MazeCell)">
+            <summary>
+            Construct a generator with a default seed.
+            </summary>
+            <param name="maze">Maze used for generation.</param>
+            <param name="initialCell">Cell that will be current at the start of generation(optional).</param>
+            <param name="params">Optional origin shift parameters to use.</param>
+        </member>
+        <member name="M:Labyrinthian.OriginShiftGeneration.#ctor(Labyrinthian.Maze,System.Int32,Labyrinthian.OriginShiftParams,Labyrinthian.MazeCell)">
+            <summary>
+            Construct a generator with specified seed.
+            </summary>
+            <param name="maze">Maze used for generation.</param>
+            <param name="seed">Seed for random numbers generator.</param>
+            <param name="initialCell">Cell that will be current at the start of generation(optional).</param>
+            <param name="params">Optional origin shift parameters to use.</param>
+        </member>
+        <member name="T:Labyrinthian.PrimGeneration">
+            <summary>
+            Maze generator that uses randomized Prim's algorithm.
+            </summary>
+        </member>
+        <member name="M:Labyrinthian.PrimGeneration.#ctor(Labyrinthian.Maze,Labyrinthian.MazeCell)">
+            <inheritdoc cref="M:Labyrinthian.MazeGenerator.#ctor(Labyrinthian.Maze,Labyrinthian.MazeCell,System.Boolean)" />
+        </member>
+        <member name="M:Labyrinthian.PrimGeneration.#ctor(Labyrinthian.Maze,System.Int32,Labyrinthian.MazeCell)">
+            <inheritdoc cref="M:Labyrinthian.MazeGenerator.#ctor(Labyrinthian.Maze,System.Int32,Labyrinthian.MazeCell,System.Boolean)" />
+        </member>
+        <member name="T:Labyrinthian.RecursiveBacktrackerGeneration">
+            <summary>
+            Maze generator that uses Recursive Backtracker algorithm.
+            </summary>
+        </member>
+        <member name="M:Labyrinthian.RecursiveBacktrackerGeneration.#ctor(Labyrinthian.Maze,Labyrinthian.MazeCellSelection,Labyrinthian.MazeCell)">
+            <inheritdoc cref="M:Labyrinthian.MazeGeneratorWithCustomSelection.#ctor(Labyrinthian.Maze,Labyrinthian.MazeCellSelection,Labyrinthian.MazeCell,System.Boolean)"/>
+        </member>
+        <member name="M:Labyrinthian.RecursiveBacktrackerGeneration.#ctor(Labyrinthian.Maze,System.Int32,Labyrinthian.MazeCellSelection,Labyrinthian.MazeCell)">
+            <inheritdoc cref="M:Labyrinthian.MazeGeneratorWithCustomSelection.#ctor(Labyrinthian.Maze,System.Int32,Labyrinthian.MazeCellSelection,Labyrinthian.MazeCell,System.Boolean)"/>
+        </member>
+        <member name="T:Labyrinthian.RecursiveDivisionGeneration">
+            <summary>
+            Maze generator that uses Recursive division algorithm.
+            Can be used only for <see cref="T:Labyrinthian.OrthogonalMaze"/>.
+            </summary>
+        </member>
+        <member name="M:Labyrinthian.RecursiveDivisionGeneration.#ctor(Labyrinthian.Maze,System.Single)">
+            <inheritdoc cref="M:Labyrinthian.RecursiveDivisionGeneration.#ctor(Labyrinthian.Maze,System.Int32,System.Single)"/>
+        </member>
+        <member name="M:Labyrinthian.RecursiveDivisionGeneration.#ctor(Labyrinthian.Maze,System.Int32,System.Single)">
+            <inheritdoc cref="M:Labyrinthian.MazeGenerator.#ctor(Labyrinthian.Maze,System.Int32,Labyrinthian.MazeCell,System.Boolean)"/>
+            <param name="horizontalBias">
+            Horizontal bias. 
+            The higher this number, the more horizontal walls there are generated.
+            If number is less than 1, then more vertical walls will be generated.
+            Can't be negative.
+            </param>
+        </member>
+        <member name="T:Labyrinthian.SidewinderGeneration">
+            <summary>
+            Maze generator that uses Sidewinder algorithm.
+            Can be used only for <see cref="T:Labyrinthian.OrthogonalMaze"/>.
+            </summary>
+        </member>
+        <member name="M:Labyrinthian.SidewinderGeneration.#ctor(Labyrinthian.Maze)">
+            <inheritdoc cref="M:Labyrinthian.MazeGenerator.#ctor(Labyrinthian.Maze,Labyrinthian.MazeCell,System.Boolean)" />
+        </member>
+        <member name="M:Labyrinthian.SidewinderGeneration.#ctor(Labyrinthian.Maze,System.Int32,System.Single)">
+            <inheritdoc cref="M:Labyrinthian.MazeGenerator.#ctor(Labyrinthian.Maze,System.Int32,Labyrinthian.MazeCell,System.Boolean)" />
+        </member>
+        <member name="T:Labyrinthian.WilsonGeneration">
+            <summary>
+            Maze generator that uses Wilson's algorithm.
+            </summary>
+        </member>
+        <member name="M:Labyrinthian.WilsonGeneration.#ctor(Labyrinthian.Maze,Labyrinthian.MazeCell)">
+            <inheritdoc cref="M:Labyrinthian.MazeGenerator.#ctor(Labyrinthian.Maze,Labyrinthian.MazeCell,System.Boolean)" />
+        </member>
+        <member name="M:Labyrinthian.WilsonGeneration.#ctor(Labyrinthian.Maze,System.Int32,Labyrinthian.MazeCell)">
+            <inheritdoc cref="M:Labyrinthian.MazeGenerator.#ctor(Labyrinthian.Maze,System.Int32,Labyrinthian.MazeCell,System.Boolean)" />
+        </member>
+        <member name="T:Labyrinthian.Maze">
+            <summary>
+            Class representating a graph-based maze. 
+            It consists of two undirected graphs: <b>base graph</b> and <b>passages graph</b>.
+            </summary>
+            <remarks>
+            <para>
+            Each <b><b>node</b></b> of the <b>base graph</b> represents a maze cell or a special cell with a negative index,
+            that is not the maze part and used to draw exterior walls.
+            <br/>
+            Each <b>edge</b> of the <b>base graph</b> represents a possible wall/passage, if one of the nodes
+            of the <b>edge</b> is not the maze part then this <b>edge</b> is an exterior wall.
+            </para>
+            <para>
+            Each <b>node</b> of the <b>passages graph</b> represents a maze cell.
+            <br/>
+            Each <b>edge</b> of the <b>passages graph</b> represent passage between two maze cells.
+            </para>
+            <para>
+            <b>Base graph</b> is created inside the constructor and <b>passages graph</b> should be initialized
+            inside the <see cref="T:Labyrinthian.MazeGenerator"/> class
+            </para>
+            </remarks>
+        </member>
+        <member name="P:Labyrinthian.Maze.Cells">
+            <summary>
+            Cells that maze contains.
+            </summary>
+        </member>
+        <member name="F:Labyrinthian.Maze.Paths">
+            <summary>
+            Each solution of the maze.
+            </summary>
+        </member>
+        <member name="P:Labyrinthian.Maze.Description">
+            <summary>
+            Description of the maze. Contains type of the maze and its dimensions.
+            </summary>
+        </member>
+        <member name="P:Labyrinthian.Maze.Sizes">
+            <summary>
+            Sizes of the maze in each dimension.
+            </summary>
+        </member>
+        <member name="P:Labyrinthian.Maze.Dimensions">
+            <summary>
+            Number of the maze dimensions.
+            </summary>
+        </member>
+        <member name="P:Labyrinthian.Maze.Width2D">
+            <summary>
+            2D width of the maze(for svg exporting).
+            </summary>
+        </member>
+        <member name="P:Labyrinthian.Maze.Height2D">
+            <summary>
+            2D height of the maze(for svg exporting).
+            </summary>
+        </member>
+        <member name="T:Labyrinthian.Maze.EdgeChangedEvent">
+            <summary>
+            Delegete of an event that is raised when passage is carved or wall is added.
+            </summary>
+            <param name="owner">Maze that called the event</param>
+            <param name="edge">Edge that was changed</param>
+            <param name="isConnected">True if passage is carved, false if wall is added</param>
+        </member>
+        <member name="E:Labyrinthian.Maze.EdgeChanged">
+            <summary>
+            Event that is raised when passage is carved or wall is added.
+            </summary>
+        </member>
+        <member name="M:Labyrinthian.Maze.#ctor">
+            <summary>
+            Basic initialization without touching the Cells array.
+            </summary>
+        </member>
+        <member name="M:Labyrinthian.Maze.#ctor(System.Int32)">
+            <summary>
+            Initialization of <see cref="P:Labyrinthian.Maze.Cells"/>.
+            </summary>
+            <param name="size">A size of <see cref="P:Labyrinthian.Maze.Cells"/>.</param>
+        </member>
+        <member name="M:Labyrinthian.Maze.ConnectCells(Labyrinthian.MazeCell,Labyrinthian.MazeCell)">
+            <summary>
+            Carve a passage between <paramref name="cell1"/> and <paramref name="cell2"/>
+            (order of the arguments doesn't matter).
+            </summary>
+            <returns><see langword="true"/> when passage is carved, or <see langword="false"/> when passage was already carved</returns>
+            <exception cref="T:Labyrinthian.CellIsOuterException" />
+            <exception cref="T:Labyrinthian.CellsAreNotNeighborsException" />
+            <exception cref="T:System.ArgumentNullException" />
+        </member>
+        <member name="M:Labyrinthian.Maze.BlockCells(Labyrinthian.MazeCell,Labyrinthian.MazeCell)">
+            <summary>
+            Create a wall between <paramref name="cell1"/> and <paramref name="cell2"/>
+            (order of the arguments doesn't matter).
+            </summary>
+            <returns><see langword="true"/> when wall is created, or <see langword="false"/> when wall was already present</returns>
+            <exception cref="T:Labyrinthian.CellIsOuterException" />
+            <exception cref="T:Labyrinthian.CellsAreNotNeighborsException" />
+            <exception cref="T:System.ArgumentNullException" />
+        </member>
+        <member name="M:Labyrinthian.Maze.AreCellsConnected(Labyrinthian.MazeCell,Labyrinthian.MazeCell)">
+            <summary>
+            Check if there is a passage between <paramref name="cell1"/> and <paramref name="cell2"/>
+            (order of the arguments doesn't matter).
+            </summary>
+            <returns>
+            True when a passages between cell1 and cell2 exists. 
+            False when a passage between cell1 and cell2 doesn't exist,
+            at least one of the cells isn't the part of the maze,
+            cell1 and cell2 aren't neighbors
+            </returns>
+            <exception cref="T:System.ArgumentNullException" />
+        </member>
+        <member name="M:Labyrinthian.Maze.InitGraph">
+            <summary>
+            Init the base graph of the maze. This method uses an abstract method GetDirectedNeighbors(cell) to set
+            all neighbors of Cells. It's intended to be called inside the constructor
+            of Maze overrides after initializing Cells array.
+            </summary>
+        </member>
+        <member name="M:Labyrinthian.Maze.GetDirectedNeighbors(Labyrinthian.MazeCell)">
+            <summary>
+            This method should return all directed neighbors of the cell. It's used inside the method InitGraph to
+            set all neighbors of Cells.
+            </summary>
+            <returns>
+            All directed neighbors of the cell.
+            </returns>
+        </member>
+        <member name="M:Labyrinthian.Maze.GetCellPointsNumber(Labyrinthian.MazeCell)">
+            <summary>
+            Get the number of points needed to represent the cell
+            </summary>
+        </member>
+        <member name="M:Labyrinthian.Maze.GetCellPoint(Labyrinthian.MazeCell,System.Int32)">
+            <summary>
+            Get a point of the cell.
+            </summary>
+            <param name="cell">Cell whose point we need to get.</param>
+            <param name="pointIndex">Index of the point.</param>
+            <returns>Point of the cell.</returns>
+            <exception cref="T:System.ArgumentOutOfRangeException" />
+        </member>
+        <member name="M:Labyrinthian.Maze.GetCellCenter(Labyrinthian.MazeCell)">
+            <summary>
+            Get a center of the cell.
+            </summary>
+            <returns>
+            If isn't overrided, returns a center of a polygon created by points of the cell.
+            </returns>
+            <exception cref="T:System.ArgumentNullException" />
+        </member>
+        <member name="M:Labyrinthian.Maze.GetCellPath(Labyrinthian.MazeCell)">
+            <summary>
+            Get path representation of the cell.
+            </summary>
+            <param name="cell">Cell whose path representation we need to get.</param>
+            <returns>
+            Paths that combined together form a cell shape.
+            </returns>
+        </member>
+        <member name="M:Labyrinthian.Maze.GetCellCenter2D(Labyrinthian.MazeCell)">
+            <summary>
+            Get a center of the cell(2D).
+            </summary>
+            <returns>
+            2D center of the cell.
+            </returns>
+        </member>
+        <member name="M:Labyrinthian.Maze.GetWallPosition(Labyrinthian.MazeEdge)">
+            <summary>
+            Get a path that represents a wall.
+            </summary>
+            <param name="wall">Edge that represents a wall.</param>
+        </member>
+        <member name="M:Labyrinthian.Maze.GetPath(Labyrinthian.MazeEdge)">
+            <summary>
+            Get a path between two neighboring cells.
+            </summary>
+            <param name="edge">An edge that represents two neighboring cells.</param>
+            <returns>A path between two neighboring cells.</returns>
+        </member>
+        <member name="M:Labyrinthian.Maze.GetPathBetweenCells(Labyrinthian.MazeCell,Labyrinthian.MazeCell)">
+            <summary>
+            Get a path between two neighboring cells.
+            </summary>
+            <exception cref="T:System.ArgumentNullException" />
+            <exception cref="T:Labyrinthian.CellsAreNotNeighborsException" />
+        </member>
+        <member name="M:Labyrinthian.Maze.GetPathBetweenCells(Labyrinthian.MazeEdge)">
+            <summary>
+            Get a path that represents two neighboring cells.
+            </summary>
+            <param name="relation"></param>
+            <returns>
+            <see cref="T:Labyrinthian.Line"/> if isn't overrided.
+            </returns>
+            <exception cref="T:Labyrinthian.CellsAreNotNeighborsException" />
+        </member>
+        <member name="M:Labyrinthian.Maze.ToString">
+            <summary>
+            Get maze description.
+            </summary>
+            <returns><see cref="P:Labyrinthian.Maze.Description" /></returns>
+        </member>
+        <member name="T:Labyrinthian.MazeCell">
+            <summary>
+            Representation of a maze cell used by <see cref="T:Labyrinthian.Maze"/>. Cell can be either a part of the maze or an outer cell
+            </summary>
+            <remarks>
+            <para>
+            A part of the maze is a cell that is exists inside the maze. Between these cells can exist passages or walls.
+            </para>
+            <para>
+            An outer cell is a cell that is used only for represantaion of entries/exits. 
+            When the cell is outer then its <see cref="F:Labyrinthian.MazeCell.Index"/> is negative, <see cref="P:Labyrinthian.MazeCell.DirectedNeighbors"/> is null
+            and it has only one neighbor. Direction to this neighbor can be calculated using this formula:
+            <br />
+            <code>-<see cref="F:Labyrinthian.MazeCell.Index"/> - 1</code>
+            </para>
+            </remarks>
+        </member>
+        <member name="F:Labyrinthian.MazeCell.Index">
+            <summary>
+            If positive, it's an index of the cell in <see cref="P:Labyrinthian.Maze.Cells"/>;
+            if negative then this cell is outer.
+            </summary>
+        </member>
+        <member name="P:Labyrinthian.MazeCell.Neighbors">
+            <summary>
+            All neighbors from <see cref="P:Labyrinthian.MazeCell.DirectedNeighbors"/> that are parts of the maze and not null
+            </summary>
+        </member>
+        <member name="P:Labyrinthian.MazeCell.DirectedNeighbors">
+            <summary>
+            An array, whose indices mean directions(e.g. for <see cref="T:Labyrinthian.OrthogonalMaze"/> it's 0-right, 1-left, 2-down, 3-up).
+            <see langword="null"/> in the array means, that the direction doesn't exist for this cell.
+            The array can contain outer cells.
+            </summary>
+            <remarks>
+            This array is <see langword="null"/> when the cell is outer.
+            </remarks>
+        </member>
+        <member name="P:Labyrinthian.MazeCell.IsMazePart">
+            <summary>
+            <see langword="true"/> if this cell is a maze part;
+            <see langword="false"/> if this cell is outer.
+            </summary>
+        </member>
+        <member name="M:Labyrinthian.MazeCell.#ctor(System.Int32)">
+            <summary>
+            Create a maze cell.
+            </summary>
+            <remarks>
+            <para>
+            Use <see cref="M:Labyrinthian.MazeCell.SetNeighbors(Labyrinthian.MazeCell[])"/> after to set its neighbors.
+            </para>
+            <para>
+            For creating outer cells use <see cref="M:Labyrinthian.MazeCell.CreateOuterCell(Labyrinthian.MazeCell,System.Int32)"/>.
+            </para>
+            </remarks>
+            <param name="index">index of the cell(can't be negative)</param>
+            <exception cref="T:System.ArgumentOutOfRangeException" />
+        </member>
+        <member name="M:Labyrinthian.MazeCell.CreateOuterCell(Labyrinthian.MazeCell,System.Int32)">
+            <summary>
+            Create an outer cell
+            </summary>
+            <param name="neighbor">single neighbor of the cell(shouldn't be null).</param>
+            <param name="direction">direction from created cell to the neighbor(can't be negative).</param>
+            <exception cref="T:System.ArgumentOutOfRangeException" />
+        </member>
+        <member name="M:Labyrinthian.MazeCell.SetNeighbors(Labyrinthian.MazeCell[])">
+            <summary>
+            Set directed neighbors to the cell.
+            </summary>
+            <exception cref="T:Labyrinthian.CellIsOuterException"/>
+        </member>
+        <member name="M:Labyrinthian.MazeCell.Equals(Labyrinthian.MazeCell)">
+            <summary>
+            Compare cells by reference
+            </summary>
+            <param name="other"></param>
+            <returns>true, if both cells are equal by reference</returns>
+        </member>
+        <member name="M:Labyrinthian.MazeCell.AreNeighbors(Labyrinthian.MazeCell,Labyrinthian.MazeCell)">
+            <summary>
+            Check whether two cells are neighbors(order of the arguments doesn't mater).
+            </summary>
+            <returns>
+            <see langword="true"/> if two cells are neighbors;
+            <see langword="false"/> if two cells are not neighbors
+            </returns>
+        </member>
+        <member name="M:Labyrinthian.MazeCellUtils.FindNeighbors(Labyrinthian.MazeCell,System.Predicate{Labyrinthian.MazeCell})">
+            <summary>
+            Find all neighbors inside <see cref="P:Labyrinthian.MazeCell.Neighbors"/> that satisfy <paramref name="predicate"/>.
+            </summary>
+            <param name="cell"></param>
+            <param name="predicate">Condition that found neighbor should satisfy</param>
+            <returns>List of neighbors that satisfy <paramref name="predicate"/></returns>
+        </member>
+        <member name="M:Labyrinthian.MazeCellUtils.FindAllNeighbors(Labyrinthian.MazeCell,System.Predicate{Labyrinthian.MazeCell})">
+            <summary>
+            Find all neighbors inside <see cref="P:Labyrinthian.MazeCell.DirectedNeighbors"/> that satisfy <paramref name="predicate"/>.
+            </summary>
+            <param name="cell"></param>
+            <param name="predicate">Condition that found neighbor should satisfy</param>
+            <returns>List of neighbors that satisfy <paramref name="predicate"/></returns>
+        </member>
+        <member name="M:Labyrinthian.MazeCellUtils.FindNeighbors(Labyrinthian.MazeCell,System.Predicate{Labyrinthian.MazeCell},System.Boolean)">
+            <summary>
+            Find all neighbors that satisfy <paramref name="predicate"/>.
+            </summary>
+            <param name="cell"></param>
+            <param name="predicate">Condition that found neighbor should satisfy</param>
+            <param name="includeOuterCells">
+            if <see langword="true"/> then <see cref="P:Labyrinthian.MazeCell.DirectedNeighbors"/> is searched;
+            otherwise <see cref="P:Labyrinthian.MazeCell.Neighbors"/> is searched
+            </param>
+            <returns>List of neighbors that satisfy <paramref name="predicate"/></returns>
+        </member>
+        <member name="M:Labyrinthian.MazeCellUtils.FindNeighbor(Labyrinthian.MazeCell,System.Predicate{Labyrinthian.MazeCell})">
+            <summary>
+            Find a first neighbor inside <see cref="P:Labyrinthian.MazeCell.Neighbors"/> that satisfies <paramref name="predicate"/>
+            </summary>
+            <param name="cell"></param>
+            <param name="predicate">Condition that found neighbor should satisfy</param>
+            <returns>
+            First found neighbor that satisfies <paramref name="predicate"/> or 
+            <see langword="null"/> if neighbor is not found
+            </returns>
+        </member>
+        <member name="M:Labyrinthian.MazeCellUtils.TryFindNeighbor(Labyrinthian.MazeCell,System.Predicate{Labyrinthian.MazeCell},Labyrinthian.MazeCell@)">
+            <summary>
+            Try to find a first neighbor inside <see cref="P:Labyrinthian.MazeCell.Neighbors"/> that satisfies <paramref name="predicate"/>
+            </summary>
+            <param name="cell"></param>
+            <param name="predicate">Condition that found neighbor should satisfy</param>
+            <param name="neighbor">Found neighbor(null! if isn't found)</param>
+            <returns>
+            <see langword="true"/> if neighbor is found;
+            <see langword="false"/> if neighbor is not found
+            </returns>
+        </member>
+        <member name="M:Labyrinthian.MazeCellUtils.IsNotNullAndMazePart(Labyrinthian.MazeCell)">
+            <summary>
+            Check whether cell is not null and a maze part.
+            </summary>
+            <returns>
+            <param name="cell"></param>
+            <see langword="true"/> if cell is not null and a maze part;
+            <see langword="false"/> if cell is null or an outer.
+            </returns>
+        </member>
+        <member name="M:Labyrinthian.MazeCellUtils.IsNotNullAndOuter(Labyrinthian.MazeCell)">
+            <summary>
+            Check whether cell is not null and an outer.
+            </summary>
+            <returns>
+            <param name="cell"></param>
+            <see langword="true"/> if cell is not null and an outer;
+            <see langword="false"/> if cell is null or a maze part.
+            </returns>
+        </member>
+        <member name="T:Labyrinthian.MazeEdge">
+            <summary>
+            Struct that represents an edge of passages graph of a maze.
+            </summary>
+        </member>
+        <member name="P:Labyrinthian.MazeEdge.Direction">
+            <summary>
+            Direction from the first cell to the second cell
+            </summary>
+        </member>
+        <member name="P:Labyrinthian.MazeEdge.Inverted">
+            <summary>
+            Inverted edge
+            </summary>
+        </member>
+        <member name="M:Labyrinthian.MazeEdge.GetMinMax(Labyrinthian.MazeCell,Labyrinthian.MazeCell)">
+            <summary>
+            Create an edge where cell1.index &lt; cell2.index
+            </summary>
+        </member>
+        <member name="M:Labyrinthian.MazeEdge.Equals(Labyrinthian.MazeEdge)">
+            <summary>
+            Two edges are equal if their nodes are equal and have the same order
+            </summary>
+            <returns>
+            <see langword="true" /> if both edges have equal nodes that have the same order;
+            <see langword="false" /> otherwise
+            </returns>
+        </member>
+        <member name="T:Labyrinthian.MazePath">
+            <summary>
+            Path that represents a path in the maze from entry to exit(edges with outer cell).
+            </summary>
+        </member>
+        <member name="P:Labyrinthian.MazePath.Path">
+            <summary>
+            Path from <see cref="P:Labyrinthian.MazePath.Entry"/> to <see cref="P:Labyrinthian.MazePath.Exit"/> found using BFS.
+            </summary>
+        </member>
+        <member name="M:Labyrinthian.MazePath.#ctor(Labyrinthian.Maze,Labyrinthian.MazeEdge,Labyrinthian.MazeEdge)">
+            <summary>
+            Create a maze path.
+            </summary>
+            <param name="maze">Maze where path will be placed.</param>
+            <param name="entry">Edge that represents an entry(second node should be outer cell).</param>
+            <param name="exit">Edge that represents an exit(second node should be outer cell).</param>
+            <exception cref="T:System.ArgumentException" />
+        </member>
+        <member name="M:Labyrinthian.MazePath.Recalculate">
+            <summary>
+            Recalculate the path.
+            </summary>
+        </member>
+        <member name="M:Labyrinthian.MazePath.GetSegments(System.Boolean)">
+            <summary>
+            Get all vector path segments that represent this path.
+            </summary>
+            <param name="includeOuterCells">
+            If <see langword="true"/> then edges with outer cells will be returned too.
+            </param>
+        </member>
+        <member name="T:Labyrinthian.DeltaMaze">
+            <summary>
+            2-dimensional Maze that consists of Triangles.
+            </summary>
+        </member>
+        <member name="M:Labyrinthian.DeltaMaze.#ctor(System.Int32,System.Int32,System.Predicate{Labyrinthian.GridPoint2D},System.Int32)">
+            <summary>
+            Create a custom delta maze.
+            </summary>
+            <param name="width">Number of columns. Should be greater than 1.</param>
+            <param name="height">Number of rows. Should be greater than 1.</param>
+            <param name="p">Predicate that's used to determine whether we should include the cell.</param>
+            <param name="reminder">
+            0 or 1 value.
+            If 0 then first triangle on the grid will be pointing up,
+            otherwise it will be pointing down.
+            </param>
+            <exception cref="T:System.ArgumentOutOfRangeException" />
+        </member>
+        <member name="M:Labyrinthian.DeltaMaze.#ctor(System.Int32,System.Int32,System.Int32,System.Int32,System.Int32)">
+            <summary>
+            Create a delta maze with inner room.
+            </summary>
+            <param name="width">Number of columns. Should be greater than 1.</param>
+            <param name="height">Number of rows. Should be greater than 1.</param>
+            <param name="inWidth">
+            Number of the rows of the inner rectangle. Should be positive and not greater than
+            <c><paramref name="width"/> - 2</c>
+            </param>
+            <param name="inHeight">
+            Number of the columns of the inner rectangle. Should be positive and not greater than
+            <c><paramref name="height"/> - 2</c>
+            </param>
+            <param name="reminder">
+            0 or 1 value.
+            If 0 then first triangle on the grid will be pointing up,
+            otherwise it will be pointing down.
+            </param>
+            <exception cref="T:System.ArgumentOutOfRangeException" />
+        </member>
+        <member name="M:Labyrinthian.DeltaMaze.#ctor(System.Int32,System.Int32)">
+            <summary>
+            Create a triangular delta maze with triangular inner room.
+            </summary>
+            <param name="sideLength">Side length of the triangle. Should be greater than 1.</param>
+            <param name="inSideLength">
+            Side length of the inner triangle. Should be positive and not greater than 
+            <c><paramref name="sideLength"/> - 3</c>
+            </param>
+            <exception cref="T:System.ArgumentOutOfRangeException" />
+        </member>
+        <member name="M:Labyrinthian.DeltaMaze.CreateHexagonal(System.Int32,System.Int32)">
+            <summary>
+            Create a hexagonal delta maze with hexagonal inner room.
+            </summary>
+            <param name="sideLength">Side length of the hexagon. Should be greater than 1.</param>
+            <param name="inSideLength">
+            Side length of the inner hexagon. Should be positive and not greater than 
+            <c><paramref name="sideLength"/> - 1</c>
+            </param>
+            <exception cref="T:System.ArgumentOutOfRangeException" />
+        </member>
+        <member name="T:Labyrinthian.Grid2DPatterns">
+            <summary>
+            Class for patterns used for mazes on 2D grid.
+            </summary>
+        </member>
+        <member name="M:Labyrinthian.Grid2DPatterns.RectangularPattern(System.Int32,System.Int32,System.Int32,System.Int32)">
+            <summary>
+            Predicate for the rectangular pattern with inner rectangular room.
+            </summary>
+            <param name="width">Width of the main rectangle. Should be greater than 1.</param>
+            <param name="height">Height of the main rectangle. Should be greater than 1.</param>
+            <param name="inWidth">
+            Width of the inner rectangle. Should be positive and not greater than
+            <c><paramref name="width"/> - 2</c>
+            </param>
+            <param name="inHeight">
+            Height of the inner rectangle. Should be positive and not greater than
+            <c><paramref name="height"/> - 2</c>
+            </param>
+            <exception cref="T:System.ArgumentOutOfRangeException"/>
+        </member>
+        <member name="M:Labyrinthian.Grid2DPatterns.TriangularPattern(System.Int32,System.Int32)">
+            <summary>
+            Predicate for the triangular pattern with inner triangular room.
+            </summary>
+            <param name="sideLength">Side length of the triangle. Should be greater than 1.</param>
+            <param name="inSideLength">
+            Side length of the inner triangle. Should be positive and not greater than 
+            <c><paramref name="sideLength"/> - 3</c>
+            </param>
+            <exception cref="T:System.ArgumentOutOfRangeException"/>
+        </member>
+        <member name="M:Labyrinthian.Grid2DPatterns.HexagonalPattern(System.Int32,System.Int32)">
+            <summary>
+            Predicate for the hexagonal pattern with inner hexagonal room.
+            </summary>
+            <param name="sideLength">Side length of the hexagon. Should be greater than 1.</param>
+            <param name="inSideLength">
+            Side length of the inner hexagon. Should be positive and not greater than 
+            <c><paramref name="sideLength"/> - 1</c>
+            </param>
+            <exception cref="T:System.ArgumentOutOfRangeException"/>
+        </member>
+        <member name="M:Labyrinthian.Grid2DPatterns.DeltaHexagonalPattern(System.Int32,System.Int32)">
+            <summary>
+            Predicate for the hexagonal pattern with inner hexagonal room on the triangular grid.
+            </summary>
+            <param name="sideLength">Side length of the hexagon. Should be greater than 1.</param>
+            <param name="inSideLength">
+            Side length of the inner hexagon. Should be positive and not greater than 
+            <c><paramref name="sideLength"/> - 1</c>
+            </param>
+        </member>
+        <member name="M:Labyrinthian.Grid2DPatterns.CirclePredicate(System.Int32,System.Int32)">
+            <summary>
+            Predicate for the circular pattern with inner circular room.
+            </summary>
+            <param name="radius">Radius of the base circle. Should be greater than 1.</param>
+            <param name="inRadius">
+            Radius of the inner circle. Should be positive and not greater than 
+            <c><paramref name="radius"/> - 1</c>
+            </param>
+        </member>
+        <member name="T:Labyrinthian.GridMaze2D">
+            <summary>
+            2-dimensional maze that can be represented with a single grid.
+            </summary>
+        </member>
+        <member name="F:Labyrinthian.GridMaze2D.CellsGrid">
+            <summary>
+            Grid of cells(<see langword="null"/> when there's a gap).
+            </summary>
+        </member>
+        <member name="F:Labyrinthian.GridMaze2D.CellsCoordinates">
+            <summary>
+            Coordinates of each cell on the grid.
+            </summary>
+        </member>
+        <member name="F:Labyrinthian.GridMaze2D.Rows">
+            <summary>
+            Number of rows.
+            </summary>
+        </member>
+        <member name="F:Labyrinthian.GridMaze2D.Columns">
+            <summary>
+            Number of columns.
+            </summary>
+        </member>
+        <member name="M:Labyrinthian.GridMaze2D.#ctor(System.Int32,System.Int32,System.Predicate{Labyrinthian.GridPoint2D})">
+            <summary>
+            Create a grid-based maze.
+            </summary>
+            <param name="width">Number of columns. Should be greater than 1.</param>
+            <param name="height">Number of rows. Should be greater than 1.</param>
+            <param name="p">Predicate that's used to determine whether we should include the cell.</param>
+            <exception cref="T:System.ArgumentOutOfRangeException" />
+        </member>
+        <member name="M:Labyrinthian.GridMaze2D.GetDirectedNeighbors(Labyrinthian.MazeCell,System.Int32,System.Int32)">
+            <summary>
+            Get directed neighbors of the cell.
+            </summary>
+            <param name="cell">Cell, whose neighbors will be returned.</param>
+            <param name="row">Row of the cell.</param>
+            <param name="column">Column of the cell.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Labyrinthian.GridMaze2D.GetCell(System.Int32,System.Int32,Labyrinthian.MazeCell,System.Int32)">
+            <summary>
+            Get a cell or create a new outer cell and return it.
+            </summary>
+            <param name="row">Row of the cell.</param>
+            <param name="column">Column of the cell.</param>
+            <param name="neighbor">Neighbor of the cell.</param>
+            <param name="direction">Direction to the neighbor.</param>
+            <returns>
+            Cell that's already exists with given coordinates or a new outer cell.
+            </returns>
+        </member>
+        <member name="P:Labyrinthian.GridMaze2D.Item(System.Int32,System.Int32)">
+            <summary>
+            Access a cell from the grid.
+            </summary>
+        </member>
+        <member name="T:Labyrinthian.GridPoint2D">
+            <summary>
+            Struct to represent a point that each cell of <see cref="T:Labyrinthian.GridMaze2D"/> has.
+            </summary>
+        </member>
+        <member name="T:Labyrinthian.OrthogonalMaze">
+            <summary>
+            2-dimensional Maze that consists of Squares.
+            </summary>
+        </member>
+        <member name="M:Labyrinthian.OrthogonalMaze.#ctor(System.Int32,System.Int32,System.Predicate{Labyrinthian.GridPoint2D})">
+            <summary>
+            Create a custom orthogonal maze.
+            </summary>
+            <param name="width">Number of columns. Should be greater than 1.</param>
+            <param name="height">Number of rows. Should be greater than 1.</param>
+            <param name="p">Predicate that's used to determine whether we should include the cell.</param>
+            <exception cref="T:System.ArgumentOutOfRangeException" />
+        </member>
+        <member name="M:Labyrinthian.OrthogonalMaze.#ctor(System.Int32,System.Int32,System.Int32,System.Int32)">
+            <summary>
+            Create an orthogonal maze with inner rectangular room.
+            </summary>
+            <param name="width">Number of columns. Should be greater than 1.</param>
+            <param name="height">Number of rows. Should be greater than 1.</param>
+            <param name="inWidth">
+            Number of columns of the inner rectangle. Should be positive and not greater than
+            <c><paramref name="width"/> - 2</c>
+            </param>
+            <param name="inHeight">
+            Number of rows of the inner rectangle. Should be positive and not greater than
+            <c><paramref name="height"/> - 2</c>
+            </param>
+            <exception cref="T:System.ArgumentOutOfRangeException" />
+        </member>
+        <member name="T:Labyrinthian.SigmaMaze">
+            <summary>
+            2-dimensional Maze that consists of Hexagons.
+            </summary>
+        </member>
+        <member name="M:Labyrinthian.SigmaMaze.#ctor(System.Int32,System.Int32,System.Predicate{Labyrinthian.GridPoint2D},System.Int32)">
+            <summary>
+            Create a custom sigma maze.
+            </summary>
+            <param name="width">Number of columns. Should be greater than 1.</param>
+            <param name="height">Number of rows. Should be greater than 1.</param>
+            <param name="p">Predicate that's used to determine whether we should include the cell.</param>
+            <param name="reminder">
+            0 or 1 value.
+            If 0 then first hexagon on the grid will be a bit lower.
+            </param>
+            <exception cref="T:System.ArgumentOutOfRangeException" />
+        </member>
+        <member name="M:Labyrinthian.SigmaMaze.#ctor(System.Int32,System.Int32,System.Int32,System.Int32,System.Int32)">
+            <summary>
+            Create a custom sigma maze.
+            </summary>
+            <param name="width">Number of columns. Should be greater than 1.</param>
+            <param name="height">Number of rows. Should be greater than 1.</param>
+            <param name="inWidth">
+            Number of the rows of the inner hexagon. Should be positive and not greater than
+            <c><paramref name="width"/> - 2</c>
+            </param>
+            <param name="inHeight">
+            Number of the columns of the inner hexagon. Should be positive and not greater than
+            <c><paramref name="height"/> - 2</c>
+            </param>
+            <param name="reminder">
+            0 or 1 value.
+            If 0 then first hexagon on the grid will be a bit lower.
+            </param>
+            <exception cref="T:System.ArgumentOutOfRangeException" />
+        </member>
+        <member name="M:Labyrinthian.SigmaMaze.#ctor(System.Int32,System.Int32)">
+            <summary>
+            Create a hexagonal sigma maze with hexagonal inner room.
+            </summary>
+            <param name="sideLength">Side length of the hexagon. Should be greater than 1.</param>
+            <param name="inSideLength">
+            Side length of the inner hexagon. Should be positive and not greater than 
+            <c><paramref name="sideLength"/> - 1</c>
+            </param>
+            <exception cref="T:System.ArgumentOutOfRangeException" />
+        </member>
+        <member name="T:Labyrinthian.ThetaMaze">
+            <summary>
+            2-dimensional Theta(circular) maze.
+            </summary>
+            <remarks>
+            Rows here are circles and columns are segments.
+            </remarks>
+        </member>
+        <member name="F:Labyrinthian.ThetaMaze.InRadius">
+            <summary>
+            Inner radius of maze. 
+            This value is -1 if maze is custom.
+            </summary>
+        </member>
+        <member name="M:Labyrinthian.ThetaMaze.#ctor(System.Int32,System.Predicate{Labyrinthian.GridPoint2D},System.Int32)">
+            <summary>
+            Create a custom Theta(circular) maze.
+            </summary>
+            <param name="radius">Radius of the maze(number of circles). Should be greater than 1.</param>
+            <param name="p">
+            Predicate that's used to determine whether we should include the cell.
+            </param>
+            <param name="segments">Number of cells in one circle.</param>
+        </member>
+        <member name="M:Labyrinthian.ThetaMaze.#ctor(System.Int32,System.Int32,System.Int32)">
+            <summary>
+            Create a Theta(circular) maze with inner circular room.
+            </summary>
+            <param name="radius">Radius of the maze(number of circles). Should be greater than 1.</param>
+            <param name="inRadius">
+            Radius of the inner circle. Should be positive and not greater than 
+            <c><paramref name="radius"/> - 1</c>
+            </param>
+            <param name="segments">Number of cells in one circle.</param>
+        </member>
+        <member name="T:Labyrinthian.UpsilonMaze">
+            <summary>
+            2-dimensional maze that consists of both octagonal and square cells.
+            </summary>
+        </member>
+        <member name="M:Labyrinthian.UpsilonMaze.#ctor(System.Int32,System.Int32,System.Predicate{Labyrinthian.GridPoint2D},System.Int32)">
+            <summary>
+            Create a custom upsilon maze.
+            </summary>
+            <param name="width">Number of columns. Should be greater than 1.</param>
+            <param name="height">Number of rows. Should be greater than 1.</param>
+            <param name="p">Predicate that's used to determine whether we should include the cell.</param>
+            <param name="reminder">
+            0 or 1 value.
+            If 0 then first cell will be an octagon,
+            otherwise it will be a square.
+            </param>
+            <exception cref="T:System.ArgumentOutOfRangeException" />
+        </member>
+        <member name="M:Labyrinthian.UpsilonMaze.#ctor(System.Int32,System.Int32,System.Int32,System.Int32,System.Int32)">
+            <summary>
+            Create an upsilon maze with inner room.
+            </summary>
+            <param name="width">Number of columns. Should be greater than 1.</param>
+            <param name="height">Number of rows. Should be greater than 1.</param>
+            <param name="inWidth">
+            Number of the rows of the inner room. Should be positive and not greater than
+            <c><paramref name="width"/> - 2</c>
+            </param>
+            <param name="inHeight">
+            Number of the columns of the inner room. Should be positive and not greater than
+            <c><paramref name="height"/> - 2</c>
+            </param>
+            <param name="reminder">
+            0 or 1 value.
+            If 0 then first cell will be an octagon,
+            otherwise it will be a square.
+            </param>
+            <exception cref="T:System.ArgumentOutOfRangeException" />
+        </member>
+        <member name="M:Labyrinthian.UpsilonMaze.GetOctagonPoint(System.Int32,System.Single,System.Single)">
+            <summary>
+            Get a point on the octagon.
+            </summary>
+            <param name="pointIndex">Index of a point.</param>
+            <param name="left">Left offset.</param>
+            <param name="top">Top offset.</param>
+            <returns>Float array with 2 elements - x and y coordinates of the octagon point.</returns>
+            <exception cref="T:System.ArgumentOutOfRangeException"></exception>
+        </member>
+        <member name="T:Labyrinthian.Maze2D">
+            <summary>
+            2-dimensional maze base class.
+            </summary>
+        </member>
+        <member name="M:Labyrinthian.Maze2D.GetWallPointsIndices(Labyrinthian.MazeEdge)">
+            <summary>
+            Get indices of points of the first node in the edge '<paramref name="wall"/>'
+            that will be used for drawing a wall.
+            </summary>
+        </member>
+        <member name="M:Labyrinthian.Maze2D.MakeLineWall(Labyrinthian.MazeEdge,System.Int32,System.Int32)">
+            <summary>
+            Make a line wall based on two points of the first node of the edge '<paramref name="wall"/>'.
+            </summary>
+            <param name="wall">Wall that needs to be represented as a line.</param>
+            <param name="point1">First point index</param>
+            <param name="point2">Second point index</param>
+        </member>
+        <member name="M:Labyrinthian.Maze2D.GetCellPath(Labyrinthian.MazeCell)">
+            <summary>
+            Get path representation of the cell. 
+            If not overriden from Maze2D, it's all cell points joined together.
+            </summary>
+            <param name="cell">Cell whose path representation we need to get.</param>
+            <returns>
+            Paths that combined together form a cell shape.
+            </returns>
+        </member>
+        <member name="T:Labyrinthian.AlternativeUpsilonMaze">
+            <summary>
+            <para>
+            Maze that consists of both octagonal and square cells. 
+            0-grid is used for octagons and 1-grid is used for squares.
+            </para>
+            <para>
+            It's similiar to <see cref="T:Labyrinthian.UpsilonMaze"/>, but square cells are placed
+            diagonally. Also, width and height here include only octagonal cells.
+            </para>
+            </summary>
+        </member>
+        <member name="T:Labyrinthian.MultiGridPoint2D">
+            <summary>
+            Struct to represent a point that each cell of <see cref="T:Labyrinthian.MultiGridMaze2D"/> has.
+            </summary>
+        </member>
+        <member name="T:Labyrinthian.MultiGridMaze2D">
+            <summary>
+            Maze that can be represented with multiple grids that intersect each others.
+            </summary>
+        </member>
+        <member name="F:Labyrinthian.MultiGridMaze2D.CellsGrids">
+            <summary>
+            Grids of cells(<see langword="null"/> when there's a gap).
+            </summary>
+        </member>
+        <member name="F:Labyrinthian.MultiGridMaze2D.CellsCoordinates">
+            <summary>
+            Coordinates of each cell.
+            </summary>
+        </member>
+        <member name="F:Labyrinthian.MultiGridMaze2D.BaseRows">
+            <summary>
+            Main grid rows number.
+            </summary>
+        </member>
+        <member name="F:Labyrinthian.MultiGridMaze2D.BaseColumns">
+            <summary>
+            Main grid columns number.
+            </summary>
+        </member>
+        <member name="P:Labyrinthian.MultiGridMaze2D.GridsNumber">
+            <summary>
+            Number of grids.
+            </summary>
+        </member>
+        <member name="M:Labyrinthian.MultiGridMaze2D.GetGridSizes(System.Int32,System.Int32@,System.Int32@)">
+            <summary>
+            Get sizes of the grid.
+            </summary>
+            <param name="grid">Index of the grid.</param>
+            <param name="rows">Number of rows.</param>
+            <param name="columns">Number of columns.</param>
+            <exception cref="T:Labyrinthian.InvalidGridIndexException" />
+        </member>
+        <member name="M:Labyrinthian.MultiGridMaze2D.#ctor(System.Int32,System.Int32,System.Predicate{Labyrinthian.MultiGridPoint2D})">
+            <summary>
+            Create a maze.
+            </summary>
+            <param name="baseWidth">Width(columns) of the main grid.</param>
+            <param name="baseHeight">Height(rows) of the main grid.</param>
+            <param name="predicate">Predicate, used to determine whether we need to include the cell or not.</param>
+        </member>
+        <member name="M:Labyrinthian.MultiGridMaze2D.GetDirectedNeighbors(Labyrinthian.MazeCell,System.Int32,System.Int32,System.Int32)">
+            <summary>
+            Get directed neighbors of the cell.
+            </summary>
+            <param name="cell">Cell, whose neighbors will be returned.</param>
+            <param name="grid">Grid of the cell.</param>
+            <param name="row">Row of the cell.</param>
+            <param name="column">Column of the cell.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Labyrinthian.MultiGridMaze2D.GetCell(System.Int32,System.Int32,System.Int32,Labyrinthian.MazeCell,System.Int32)">
+            <summary>
+            Get a cell or create a new outer cell and return it.
+            </summary>
+            <param name="grid">Index of the grid where cell will be created.</param>
+            <param name="row">Row of the cell.</param>
+            <param name="column">Column of the cell.</param>
+            <param name="neighbor">Neighbor of the cell.</param>
+            <param name="direction">Direction to the neighbor.</param>
+            <returns>
+            Cell that's already exists with given coordinates or a new outer cell.
+            </returns>
+        </member>
+        <member name="P:Labyrinthian.MultiGridMaze2D.Item(System.Int32,System.Int32,System.Int32)">
+            <summary>
+            Access a cell from the grid.
+            </summary>
+        </member>
+        <member name="M:Labyrinthian.MazeUtils.ConnectAllCells(Labyrinthian.Maze)">
+            <summary>
+            Connect all cells in the maze.
+            There will be no walls in the maze after calling this method(not including outer walls)
+            </summary>
+        </member>
+        <member name="M:Labyrinthian.MazeUtils.GetWallsOfCell(Labyrinthian.Maze,Labyrinthian.MazeCell)">
+            <summary>
+            Get all walls of the given cell
+            </summary>
+            <exception cref="T:System.ArgumentNullException" />
+        </member>
+        <member name="M:Labyrinthian.MazeUtils.GetWalls(Labyrinthian.Maze,System.Boolean)">
+            <summary>
+            Get all walls.
+            </summary>
+            <param name="maze"></param>
+            <param name="includeOuter">
+            if <see langword="true"/> outer walls will be also returned;
+            otherwise if <see langword="false"/> only inner walls will be returned.
+            </param>
+            <returns>
+            inner and outer walls if <paramref name="includeOuter"/> is <see langword="true"/>;
+            only inner walls if <paramref name="includeOuter"/> is <see langword="false"/>.
+            </returns>
+        </member>
+        <member name="M:Labyrinthian.MazeUtils.GetOuterWalls(Labyrinthian.Maze)">
+            <summary>
+            Get all outer walls.
+            </summary>
+            <returns>
+            Outer walls of the maze.
+            </returns>
+        </member>
+        <member name="M:Labyrinthian.MazeUtils.IsDeadEnd(Labyrinthian.Maze,Labyrinthian.MazeCell)">
+            <summary>
+            Check whether cell is a dead end or not.
+            </summary>
+            <returns>
+            <see langword="true"/> if cell is a dead end;
+            <see langword="false"/> otherwise.
+            </returns>
+        </member>
+        <member name="M:Labyrinthian.MazeUtils.FindDeadEnds(Labyrinthian.Maze)">
+            <summary>
+            Find all dead ends.
+            </summary>
+            <returns>
+            All dead ends.
+            </returns>
+        </member>
+        <member name="M:Labyrinthian.MazeUtils.GetBaseGraphEdges(Labyrinthian.Maze)">
+            <summary>
+            Get all base graph maze edges.
+            </summary>
+            <returns>
+            All base graph edges.
+            </returns>
+        </member>
+        <member name="M:Labyrinthian.MazeUtils.FindGraphEdgesDFS(Labyrinthian.Maze,System.Predicate{Labyrinthian.MazeEdge})">
+            <summary>
+            Find all edges of passages graph of the maze using DFS.
+            </summary>
+            <param name="maze"></param>
+            <param name="predicate">Predicate which determines whether we should include an edge into DFS or ignore it.</param>
+        </member>
+        <member name="M:Labyrinthian.MazeUtils.CheckIfGraphConnected(Labyrinthian.Maze)">
+            <summary>
+            Check if base graph of maze is connected.
+            </summary>
+            <returns>
+            <see langword="true"/> if base graph is connected; <see langword="false" /> otherwise.
+            </returns>
+        </member>
+        <member name="T:Labyrinthian.IMazePostProcessor">
+            <summary>
+            Interface for maze post processors.
+            </summary>
+        </member>
+        <member name="M:Labyrinthian.IMazePostProcessor.Process(Labyrinthian.MazeGenerator)">
+            <summary>
+            Process maze after it's generated.
+            </summary>
+            <param name="caller">Maze generator, that calls this method.</param>
+            <returns>
+            Step-by-step maze post processing.
+            </returns>
+        </member>
+        <member name="T:Labyrinthian.MazeBraider">
+            <summary>
+            Maze post processor that removes dead ends.
+            </summary>
+        </member>
+        <member name="M:Labyrinthian.MazeBraider.#ctor(System.Single)">
+            <summary>
+            Create a maze braider.
+            </summary>
+            <param name="braidness">
+            Amount of dead ends to be removed(from 0 to 1).
+            </param>
+            <exception cref="T:System.ArgumentOutOfRangeException" />
+        </member>
+    </members>
+</doc>
