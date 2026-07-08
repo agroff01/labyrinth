@@ -1,0 +1,178 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &8098389963261173983
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5566737269541590917}
+  - component: {fileID: 4578946745746321942}
+  - component: {fileID: 4784927869470805835}
+  - component: {fileID: 461087781758090142}
+  m_Layer: 0
+  m_Name: Room_1
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5566737269541590917
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8098389963261173983}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 7629610139297405411}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4578946745746321942
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8098389963261173983}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 94f897a95bcd6c946a3f053d7afa8da3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Labyrinth.MazeRoom
+  roomID: c433bf17-1855-429e-8396-6e0429b76a26
+  grid: {fileID: 4784927869470805835}
+  uniqueCells:
+  - x: -1
+    y: 1
+    cellDesignation: 0
+  - x: 1
+    y: -1
+    cellDesignation: 0
+  - x: 0
+    y: -3
+    cellDesignation: 1
+  - x: 0
+    y: 3
+    cellDesignation: 1
+  - x: 3
+    y: 0
+    cellDesignation: 1
+  - x: -3
+    y: 0
+    cellDesignation: 1
+  roomBlocks:
+  - m_Position: {x: 0, y: 0, z: 0}
+    m_Size: {x: 3, y: 1, z: 3}
+  - m_Position: {x: -2, y: 0, z: -2}
+    m_Size: {x: 3, y: 1, z: 3}
+  visualizer: {fileID: 461087781758090142}
+  ready: 1
+--- !u!156049354 &4784927869470805835
+Grid:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8098389963261173983}
+  m_Enabled: 1
+  m_CellSize: {x: 4, y: 4, z: 4}
+  m_CellGap: {x: 0, y: 0, z: 0}
+  m_CellLayout: 0
+  m_CellSwizzle: 0
+--- !u!114 &461087781758090142
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8098389963261173983}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 153eb737564ee4c4eb6870570349c498, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Labyrinth.GridVisualizer
+  grid: {fileID: 4784927869470805835}
+  SingleGridPoints:
+  - {x: -1, y: 0, z: 1}
+  - {x: 1, y: 0, z: -1}
+  - {x: 0, y: 0, z: -3}
+  - {x: 0, y: 0, z: 3}
+  - {x: 3, y: 0, z: 0}
+  - {x: -3, y: 0, z: 0}
+  FloatingGridPoints: []
+  GridBlocks:
+  - m_Position: {x: 0, y: 0, z: 0}
+    m_Size: {x: 3, y: 1, z: 3}
+  - m_Position: {x: -2, y: 0, z: -2}
+    m_Size: {x: 3, y: 1, z: 3}
+  useRandomColors: 1
+--- !u!1001 &7956568078282079752
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 5566737269541590917}
+    m_Modifications:
+    - target: {fileID: -8679921383154817045, guid: 2d5e7d85b0cf2084ab760f61d104d6f7, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 2d5e7d85b0cf2084ab760f61d104d6f7, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -2
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 2d5e7d85b0cf2084ab760f61d104d6f7, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 2d5e7d85b0cf2084ab760f61d104d6f7, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 2d5e7d85b0cf2084ab760f61d104d6f7, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 2d5e7d85b0cf2084ab760f61d104d6f7, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 2d5e7d85b0cf2084ab760f61d104d6f7, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 2d5e7d85b0cf2084ab760f61d104d6f7, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 2d5e7d85b0cf2084ab760f61d104d6f7, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 2d5e7d85b0cf2084ab760f61d104d6f7, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 2d5e7d85b0cf2084ab760f61d104d6f7, type: 3}
+      propertyPath: m_Name
+      value: room-large-variation
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 2d5e7d85b0cf2084ab760f61d104d6f7, type: 3}
+--- !u!4 &7629610139297405411 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 2d5e7d85b0cf2084ab760f61d104d6f7, type: 3}
+  m_PrefabInstance: {fileID: 7956568078282079752}
+  m_PrefabAsset: {fileID: 0}

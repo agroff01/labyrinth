@@ -13,7 +13,7 @@ namespace CustomUtils
         public bool Active => isObjectPresent;
         public float progress => requiredPresenceTime > 0 ? Mathf.Clamp01(currentPresenceTime / requiredPresenceTime) : (currentPresenceTime > 0 ? 1 : 0);
         public bool InProgress => (progress > 0) && (progress < 1);
-        public event Action<T> PlayerDetected;
+        public event Action<T> OnDetected;
 
         // This method is called when another collider enters the trigger
         private void OnTriggerEnter(Collider other)
@@ -35,7 +35,7 @@ namespace CustomUtils
                 if (currentPresenceTime >= requiredPresenceTime && !isObjectPresent)
                 {
                     Debug.Log($"Object has been present for {requiredPresenceTime} seconds!");
-                    PlayerDetected?.Invoke(player);
+                    OnDetected?.Invoke(player);
                     isObjectPresent = true; 
                 }
             }

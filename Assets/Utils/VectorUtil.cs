@@ -48,6 +48,13 @@ namespace CustomUtils
 
         #region Vec3 Extensions
         
+        public static Vector3 AsScaled(this Vector3 value, Vector3 scale)
+        {
+            return new (value.x * scale.x, 
+                        value.y * scale.y, 
+                        value.z * scale.z);
+        }
+
         public static void Abs(this Vector3 value)
         {
             value.x = Mathf.Abs(value.x);

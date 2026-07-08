@@ -1,6 +1,8 @@
 
 
+using System;
 using System.Collections.Generic;
+using System.Text;
 using UnityEngine;
 using UnityEngine.Animations;
 
@@ -86,6 +88,86 @@ namespace CustomUtils
         public static Renderer SetMaterialColor(this Renderer renderer, Color color)
         {
             return renderer.SetMaterialColor(color, out _);
+        }
+
+        public static bool HasAnyFlag(this Enum rhs, Enum lhs)
+        {
+            return (Convert.ToInt32(rhs) & Convert.ToInt32(lhs)) != 0;
+        }
+
+
+        public static T[,] Transpose<T>(this T[,] matrix)
+        {
+            int rows = matrix.GetLength(0);
+            int columns = matrix.GetLength(1);
+
+            T[,] result = new T[columns, rows];
+
+            // Map values from [r, c] to [c, r]
+            for (int r = 0; r < rows; r++)
+            {
+                for (int c = 0; c < columns; c++)
+                {
+                    result[c, r] = matrix[r, c];
+                }
+            }
+
+            return result;
+        }
+
+        static public T[,] RotateMatrixClockwise<T>(this T[,] oldMatrix)
+        {
+            int rows = oldMatrix.GetLength(0);
+            int columns = oldMatrix.GetLength(1);
+            
+            // For non-square grids, rows/cols swap.
+            T[,] newMatrix = new T[columns, rows];
+
+            for (int r = 0; r < rows; r++)
+            {
+                for (int c = 0; c < columns; c++)
+                {
+                    newMatrix[c, rows - 1 - r] = oldMatrix[r, c];
+                }
+            }
+            return newMatrix;
+        }
+
+
+        static public T[,] RotateMatrixCounterClockwise<T>(this T[,] oldMatrix)
+        {
+            int rows = oldMatrix.GetLength(0);
+            int columns = oldMatrix.GetLength(1);
+            
+            // For non-square grids, rows/cols swap.
+            T[,] newMatrix = new T[columns, rows];
+
+            for (int r = 0; r < rows; r++)
+            {
+                for (int c = 0; c < columns; c++)
+                {
+                    newMatrix[columns - 1 - c, r] = oldMatrix[r, c];
+                }
+            }
+            return newMatrix;
+        }
+
+        static public string MatrixToString<T>(this T[,] matrix)
+        {
+            var full = new StringBuilder();
+            for (int j = 0; j < matrix.GetLength(1); j++)
+            {
+                full.Insert(0, "\n");
+
+                var line = new StringBuilder();
+                for (int i = 0; i < matrix.GetLength(0); i++)
+                {
+                    line.Append($"[{i},{j}]" + matrix[i,j] + "\t");
+                }
+                full.Insert(0,line.ToString());
+            }
+
+            return full.ToString();
         }
 
         #region Pose Helpers

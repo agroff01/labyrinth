@@ -1,9 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Mono.CSharp;
-using SaintsField;
-using SaintsField.Playa;
+using CustomInspector;
+using CustomUtils;
+using Unity.Mathematics;
 using UnityEngine;
 
 namespace Labyrinth
@@ -17,15 +17,18 @@ namespace Labyrinth
             public enum RoomCellDesignation
             {
                 Normal = 0,
-                Doorway = 1
+                Doorway = 1,
+                BufferBlock = 1 << 1,
             }
-            [LayoutStart("Hori", ELayout.Horizontal)]
             public int x = 0;
             public int y = 0;
+            public int2 Coord => new(x,y);
             public RoomCellDesignation cellDesignation = RoomCellDesignation.Normal;
         }
 
+        [ReadOnly] public string roomID = null;
 
+        public Grid grid = null;
         public List<RoomCell> uniqueCells = new();
         public List<BoundsInt> roomBlocks = new();
 
@@ -57,6 +60,13 @@ namespace Labyrinth
             }
         }
 
+
+        IEnumerable<Vector3Int> uniqueCellSpaces => uniqueCells.Select(c => new Vector3Int(c.x, 0, c.y)).Distinct();
+        IEnumerable<Vector3Int> roomBlockAsSpaces => roomBlocks.SelectMany(b => b.allPositionsWithin.AsEnumerable()).Distinct();
+        public IEnumerable<Vector3Int> AllRoomBlockedSpaces => roomBlockAsSpaces.Concat(uniqueCells.Where(c => c.cellDesignation == RoomCell.RoomCellDesignation.Normal).Select(c => new Vector3Int(c.x, 0, c.y))).Distinct();
+        public IEnumerable<Vector3Int> AllDoorwaySpaces => uniqueCells.Where(c => c.cellDesignation == RoomCell.RoomCellDesignation.Doorway).Select(c => new Vector3Int(c.x, 0, c.y)).Distinct();
+        public IEnumerable<Vector3Int> AllSpaces => roomBlockAsSpaces.Concat(uniqueCellSpaces).Distinct();
+
         public Bounds GridSpaceBounds(Grid g, Vector3 gridOffset = default)
         {
             var realBounds = g.GetBoundsLocal(Bounds.max - Vector3Int.one);
@@ -66,8 +76,11 @@ namespace Labyrinth
         }
 
 
+        #if UNITY_EDITOR
         [Header("Runtime")]
+        [Button(nameof(GenNewID))]
         public GridVisualizer visualizer;
+
         void OnValidate()
         {
             if (visualizer)
@@ -75,13 +88,22 @@ namespace Labyrinth
                 visualizer.GridBlocks = roomBlocks;
                 visualizer.SingleGridPoints = new(uniqueCells.Select(c => new Vector3Int(c.x, 0, c.y)));
             }
+
+            if (string.IsNullOrEmpty(roomID))
+            {
+                GenNewID();
+            }
         }
 
-        public bool ready = false;
-        public Grid grid = null;
+        void GenNewID()
+        {
+            roomID = Guid.NewGuid().ToString();
+        }
+
+        public bool ForceShowDebugBounds = false;
         void OnDrawGizmosSelected()
         {   
-            if (ready && grid)
+            if (grid && (ForceShowDebugBounds || (DebugGridVisualizerCore.Instance && DebugGridVisualizerCore.Instance.ShowRoomVisualizers)))
             {
                 var color = Gizmos.color;
                 Gizmos.color = Color.black;
@@ -92,5 +114,6 @@ namespace Labyrinth
                 Gizmos.color = color;
             }
         }
+        #endif
     }
 }
