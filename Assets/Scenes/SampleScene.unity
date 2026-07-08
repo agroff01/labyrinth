@@ -173,7 +173,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   PrintToLogOnCompletion: 0
-  _: 0
+  _mapGenerated: 0
 --- !u!4 &19950767
 Transform:
   m_ObjectHideFlags: 0
@@ -247,6 +247,9 @@ MonoBehaviour:
   TestPosition:
     x: 0
     y: 0
+  OnMazeSpawned:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &19950772
 MonoBehaviour:
   m_ObjectHideFlags: 0

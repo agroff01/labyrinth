@@ -1,11 +1,12 @@
 using System.Collections.Generic;
 using CustomInspector;
+using CustomUtils;
 using UnityEngine;
 using UnityEngine.Events;
 
 namespace Labyrinth
 {
-    public class MapManager : MonoBehaviour
+    public class MapManager : MonoBehaviour, IActive
     {
         [ForceFill] public Grid mazeGrid = null;
         public Map map = null;
@@ -22,9 +23,12 @@ namespace Labyrinth
         [HideField] public UnityEvent<Map> OnObjectsPlaced = new();
         [HideField] public UnityEvent<Map> OnPathsCarved = new();
         public UnityEvent<Map> OnGenerationFinished = new();
+        
         public bool PrintToLogOnCompletion = false;
 
-        [SerializeField, HideField, Button(nameof(GenMap))] private bool _;
+        [SerializeField, HideField, Button(nameof(GenMap))] 
+        private bool _mapGenerated = false;
+        public bool Active => _mapGenerated;
         void Start()
         {
             if (!mazeGrid) return;

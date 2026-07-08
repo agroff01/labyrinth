@@ -4,10 +4,11 @@ using CustomInspector;
 using CustomUtils;
 using Unity.Mathematics;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace Labyrinth
 {
-    public class MazeSpawner : MonoBehaviour
+    public class MazeSpawner : MonoBehaviour, IActive
     {
         [SelfFill] public MapManager mapManager = null;
 
@@ -21,6 +22,9 @@ namespace Labyrinth
         [Button(nameof(TestPositionGridTileLayout), true),Space2(10), LabelSettings(LabelStyle.NoLabel)] public int2 TestPosition = int2.zero;
 
         
+        public UnityEvent<MazeSpawner> OnMazeSpawned = new();
+        private bool _mazeSpawned = false;
+        public bool Active => _mazeSpawned;
 
         void Awake()
         {
@@ -98,6 +102,9 @@ namespace Labyrinth
                     Debug.LogError($"Could not find a matching cell for {cell.Coords} position.");
                 }
             }
+
+            _mazeSpawned = true;
+            OnMazeSpawned.Invoke(this);
         }
 
         public void TestPositionGridTileLayout(int2 coord)

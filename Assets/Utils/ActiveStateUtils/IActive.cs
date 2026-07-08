@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Labyrinth
+namespace CustomUtils
 {
     public interface IActive
     {
