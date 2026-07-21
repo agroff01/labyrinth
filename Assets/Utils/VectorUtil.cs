@@ -87,6 +87,8 @@ namespace CustomUtils
         public static Vector3 WithX(this Vector3 vec, float newX) => new(newX, vec.y, vec.z);
         public static Vector3 WithY(this Vector3 vec, float newY) => new(vec.x, newY, vec.z);
         public static Vector3 WithZ(this Vector3 vec, float newZ) => new(vec.x, vec.y, newZ);
+        public static Vector3 AsFlat(this Vector3 vec) => Vector3.ProjectOnPlane(vec, Vector3.up);
+        public static Vector3 AsFlat(this Vector3 vec, Vector3 upVector) => Vector3.ProjectOnPlane(vec, upVector);
 
         public static float ByAxis(this Vector3 vec, Axis targetAxis, float fallback = 0)
         {
@@ -111,6 +113,14 @@ namespace CustomUtils
         public static Vector3 Modulo(this Vector3 a, int b)
         {
             return new Vector3(a.x % b, a.y % b, a.z % b);
+        }
+
+        public static Vector3 RotateByReference(this Vector3 original, Vector3 newUpDirection) => original.RotateByReference(newUpDirection, Vector3.up);
+        
+        public static Vector3 RotateByReference(this Vector3 original, Vector3 newUpDirection, Vector3 oldUpDirection)
+        {
+
+            return Quaternion.FromToRotation(oldUpDirection, newUpDirection) * original;
         }
 
         #endregion

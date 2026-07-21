@@ -6,7 +6,7 @@ using UnityEngine;
 namespace CustomUtils
 {
     [Serializable]
-    public class QP_RaycastConstraints
+    public class RaycastConstraints
     {
         public Vector3? intendedRaycastHeading;
         public Vector2 allowedAngleFromIndendedHeading;

@@ -75,6 +75,15 @@ namespace CustomUtils
             return new(val.position, val.forward);
         }
 
+        public static Ray FromDestination(this Ray ray, Vector3 origin, Vector3 destination)
+        {
+            ray.origin = origin;
+            ray.direction = (destination - origin).normalized;
+            return ray;
+        }
+
+        public static Ray RayFromDestination(Vector3 origin, Vector3 destination) => new Ray().FromDestination(origin, destination);
+
         public static Renderer SetMaterialColor(this Renderer renderer, Color color, out Color oldColor)
         {
             Material material = renderer.material;

@@ -39,6 +39,20 @@ namespace CustomUtils
 
             return worldPoint;
         }
+
+        public static void DrawWireCapsule(Vector3 start, Vector3 end, float radius)
+        {
+            Gizmos.DrawWireSphere(start, radius);
+            Gizmos.DrawWireSphere(end, radius);
+            Pose pose = new(start, Quaternion.LookRotation((end-start).normalized));
+
+            void DrawCapsuleEdge(Vector3 offset){ Gizmos.DrawLine(start + offset, end + offset); }
+
+            DrawCapsuleEdge(pose.up * radius);
+            DrawCapsuleEdge(pose.right * radius);
+            DrawCapsuleEdge(-pose.up * radius);
+            DrawCapsuleEdge(-pose.right * radius);
+        }
     }
 
     
