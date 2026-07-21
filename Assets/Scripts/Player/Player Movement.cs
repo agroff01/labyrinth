@@ -21,7 +21,7 @@ namespace Labyrinth
         public float Acceleration = 10f;
         public float topSpeed = 10;
         public bool overrideGravity = false;
-        [ShowIf(nameof(overrideGravity))] public float gravity = -9.8f;
+        [ShowIf(nameof(overrideGravity)), SerializeField] private Vector3 gravity = new (0,-9.81f,0);
         public float AirStrength = .4f;
         public AnimationCurve SpeedAtSlopeAngle = new();
 
@@ -29,7 +29,7 @@ namespace Labyrinth
         public Vector3 center => mainCollider.transform.TransformPoint(mainCollider.center);
 
         // // ICharacterMovement interface
-        public Vector3 DownwardsDirection { get => GroundedProvider.DownwardDirection;}
+        public Vector3 DownwardsDirection { get => overrideGravity ? gravity.normalized : Physics.gravity.normalized;}
         public Rigidbody Rb => _rigidbody;
         public IMovementInput Input => _input as IMovementInput;
         public bool IsGrounded => GroundedProvider.IsGrounded;
@@ -43,7 +43,7 @@ namespace Labyrinth
             Rb.useGravity = !overrideGravity;
             if (overrideGravity)
             {
-                Rb.AddForce(gravity * DownwardsDirection);
+                Rb.AddForce(gravity);
             }
 
             if (Input != null && Rb)
@@ -52,51 +52,45 @@ namespace Labyrinth
                 if (Input.worldDirection.sqrMagnitude > Mathf.Epsilon)
                 {
                     // Translate World Direction input (world up oriented) into the designated downwards direction from ground provider
-                    var DownwardsAlignedInput = Input.worldDirection.RotateByReference(Vector3.up, -GroundedProvider.DownwardDirection);
+                    var DownwardsAlignedInput = Input.worldDirection.RotateByReference(-DownwardsDirection, Vector3.up);
 
+                    Vector3 targetMovement;
+                    Vector3 floorDirection = -DownwardsDirection;
                     if (IsGrounded)
                     {
                         // Then Project our final intended movement direction onto the plane of the surface below our feet
-                        _floorSlopeAdjustedDirection = Vector3.ProjectOnPlane(DownwardsAlignedInput, GroundedProvider.FloorNormal).normalized;
-                        
-                        // Debug.Log($"Slope Angle: {GroundedProvider.SlopeAngle}");
-                        var targetMovement = topSpeed * _floorSlopeAdjustedDirection;
+                        _floorSlopeAdjustedDirection = DownwardsAlignedInput.RotateByReference(GroundedProvider.FloorNormal, -DownwardsDirection);
+                        // _floorSlopeAdjustedDirection = Vector3.ProjectOnPlane(DownwardsAlignedInput, GroundedProvider.FloorNormal).normalized;
+
+                        floorDirection = GroundedProvider.FloorNormal;
+
+                        targetMovement = topSpeed * _floorSlopeAdjustedDirection;
                         if (targetMovement.y > 0)
                         {
                             var speedAtSlope = SpeedAtSlopeAngle.Evaluate(GroundedProvider.SlopeAngle);
                             targetMovement *= speedAtSlope;
                         }
-                        
-
-                        var finalVelocity = Vector3.MoveTowards(Rb.linearVelocity, targetMovement, Acceleration * Time.fixedDeltaTime);
-
-
-                        Rb.linearVelocity = finalVelocity;
-                        
+                        Debug.Log($"Slope Angle: {GroundedProvider.SlopeAngle} -- Sloped Target Float {targetMovement}");
                     }
-                    // !IsGrounded
                     else
                     {
-                        var targetMovement = topSpeed * DownwardsAlignedInput;
-
-
-                        var verticalVelocity = Vector3.Project(Rb.linearVelocity, DownwardsDirection);
-                        var newHorizontalVelocity = Vector3.MoveTowards(
-                                                        Vector3.ProjectOnPlane(Rb.linearVelocity, DownwardsDirection),
-                                                        targetMovement, 
-                                                        Acceleration * Time.fixedDeltaTime * AirStrength);
-
-                        var finalVelocity = verticalVelocity + newHorizontalVelocity;
-
-                        Rb.linearVelocity = finalVelocity;
-
-                        // Debug.Log($"Added Airforce: {newHorizontalVelocity}");
-
-
-                        
+                        targetMovement = topSpeed * DownwardsAlignedInput;
                     }
 
+                    // Ammount of horizontal movement to be applied from input this frame
+                    var perUpdateMoveDelta = Acceleration * Time.fixedDeltaTime * (IsGrounded ? 1 : AirStrength);
 
+                    // Preserve any vertical direction movement from 
+                    var verticalVelocity = Vector3.Project(Rb.linearVelocity, floorDirection);
+                    var newHorizontalVelocity = Vector3.MoveTowards(
+                                                    Vector3.ProjectOnPlane(Rb.linearVelocity, floorDirection),
+                                                    targetMovement, 
+                                                    perUpdateMoveDelta
+                                                );
+
+                    var finalVelocity = verticalVelocity + newHorizontalVelocity;
+
+                    Rb.linearVelocity = finalVelocity;
                     
                 }
                 // if no valid input and grounded, prevent extreme sliding
@@ -106,7 +100,7 @@ namespace Labyrinth
                 }
             }
             // Should really just use RigidbodyReadout.cs component vvv
-            Debug.Log($"Final rb velocity of {Rb.linearVelocity} with mag of {Rb.linearVelocity.magnitude}");
+            // Debug.Log($"Final rb velocity of {Rb.linearVelocity} with mag of {Rb.linearVelocity.magnitude}");
         }
 
 

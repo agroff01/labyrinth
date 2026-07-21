@@ -12,11 +12,8 @@ namespace Labyrinth
 
         public float RaycastSphereRadius = .3f;
         public float MaxRaycastDistance = 1f;
+        public float raycastOffset = -1f;
         public LayerMask GroundLayers = default;
-        public Transform OrientationReference = null;
-        [ShowIfIs(nameof(OrientationReference), null)] public Vector3 worldDownVector = Vector3.down;
-
-
 
         [HorizontalLine("Runtime", 5, FixedColor.Red)]
 
@@ -26,13 +23,13 @@ namespace Labyrinth
         public bool IsGrounded => _grounded;
         public bool Active => _grounded;
         public RaycastHit? LastSpherecastHit => _grounded ? _lastHit : null;
-        public Vector3 DownwardDirection => OrientationReference ? -OrientationReference.up : worldDownVector;
+        public Vector3 DownwardDirection => CharacterMovement.DownwardsDirection;
         public Vector3 UpwardsDirection => -DownwardDirection;
         public Vector3 FloorNormal => LastSpherecastHit?.normal ?? UpwardsDirection;
         public float SlopeAngle => Vector3.Angle(UpwardsDirection, FloorNormal);
         public float SlopeAngleM() => SlopeAngle;
         
-        private Ray GroundCheckRay => OrientationReference ? new(OrientationReference.position, DownwardDirection) : new(transform.position, worldDownVector);
+        private Ray GroundCheckRay => new(transform.position + (DownwardDirection * raycastOffset), DownwardDirection);
 
         void FixedUpdate()
         {

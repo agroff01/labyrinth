@@ -147,28 +147,30 @@ MonoBehaviour:
   _groundedProvider: {fileID: 7056895653593663916}
   Acceleration: 90
   topSpeed: 10
-  AirStrength: 0.4
+  overrideGravity: 0
+  gravity: {x: 0, y: -9.81, z: 0}
+  AirStrength: 0.3
   SpeedAtSlopeAngle:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
-      time: 0
+      time: 30
       value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 34
+      inSlope: Infinity
+      outSlope: -0.0925778
+      tangentMode: 1
       weightedMode: 0
-      inWeight: 0
-      outWeight: 0
+      inWeight: 0.33333334
+      outWeight: 0.039739925
     - serializedVersion: 3
-      time: 1
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 34
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
+      time: 60
+      value: 0
+      inSlope: -0.000071513365
+      outSlope: Infinity
+      tangentMode: 1
+      weightedMode: 1
+      inWeight: 0.4477469
+      outWeight: 0.33333334
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
@@ -187,11 +189,10 @@ MonoBehaviour:
   _movement: {fileID: 6745291940167334650}
   RaycastSphereRadius: 0.3
   MaxRaycastDistance: 1
+  raycastOffset: -1
   GroundLayers:
     serializedVersion: 2
     m_Bits: 1
-  OrientationReference: {fileID: 4341937642203223932}
-  worldDownVector: {x: 0, y: -1, z: 0}
   _grounded: 0
 --- !u!114 &852698230289373860
 MonoBehaviour:
