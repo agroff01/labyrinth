@@ -216,7 +216,14 @@ namespace CustomUtils
             return isApproximate(q1,q2, 0.000004f);
         }
 
-        public static float Remap(this float val, float startMin, float startMax, float endMin, float endMax) => Mathf.Lerp(endMin, endMax, Mathf.InverseLerp(startMin, startMax, val));
+        public static float Remap(this float val, float startMin, float startMax, float endMin, float endMax) => 
+            Mathf.Lerp(endMin, endMax, Mathf.InverseLerp(startMin, startMax, val));
+        public static float Remap(this float val, float startMin, float startMax, float endMin, float endMax, AnimationCurve curved01)
+        {
+            var lerp = Mathf.InverseLerp(startMin, startMax, val);
+            lerp = curved01.Evaluate(lerp);
+            return Mathf.Lerp(endMin, endMax, lerp);
+        }
 
         
     }

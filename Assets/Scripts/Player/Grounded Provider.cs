@@ -17,7 +17,7 @@ namespace Labyrinth
 
         [HorizontalLine("Runtime", 5, FixedColor.Red)]
 
-        [ShowMethod(nameof(SlopeAngleM))]
+        [ShowMethod(nameof(SlopeAngleM), label = "Ground Slope")]
         [ReadOnly, SerializeField] private bool _grounded = false;
         private RaycastHit _lastHit = default;
         public bool IsGrounded => _grounded;
@@ -46,19 +46,6 @@ namespace Labyrinth
                 }
             }
         }
-
-
-        // public void SetDownDirection(in Vector3 newDir)
-        // {
-        //     OrientationReference = null;
-        //     worldDownVector = newDir;
-        // }
-        
-        // public void SetDownDirection(in Transform newRef)
-        // {
-        //     OrientationReference = newRef;
-        // }
-
 
 
         void OnDrawGizmosSelected()

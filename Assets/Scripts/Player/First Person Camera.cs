@@ -1,4 +1,3 @@
-using CustomUtil;
 using CustomUtils;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -60,7 +59,8 @@ namespace Labyrinth
 
                 transform.localRotation = Quaternion.Euler(transform.localEulerAngles.WithX(newRotationX));
 
-                RotationPlayerObject.transform.localRotation = Quaternion.Euler(RotationPlayerObject.transform.localEulerAngles.WithY(newRotationY));
+                // RotationPlayerObject.localRotation = Quaternion.Euler(RotationPlayerObject.localEulerAngles.WithY(newRotationY));
+                RotationPlayerObject.Rotate(Vector3.up, _rotationDelta.x, Space.Self);
 
             }
         }

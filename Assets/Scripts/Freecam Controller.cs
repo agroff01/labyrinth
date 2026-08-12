@@ -1,4 +1,4 @@
-using CustomUtil;
+using CustomUtils;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Rendering;

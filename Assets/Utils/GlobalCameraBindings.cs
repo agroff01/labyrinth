@@ -1,7 +1,7 @@
 using QFSW.QC;
 using UnityEngine;
 
-namespace CustomUtil
+namespace CustomUtils
 {
     public class GlobalCameraController : MonoBehaviour
     {

@@ -8,6 +8,8 @@ namespace Labyrinth
     {
 
         public InputActionReference movementAction = null;
+        public InputActionReference JumpAction = null;
+        public InputActionReference SprintAction = null;
         public Transform ForwardDirectionReference = null;
         public float inputThreshold = .2f;
 
@@ -20,6 +22,8 @@ namespace Labyrinth
         public Vector3 rawDirection => new (rapidUpdateDirection.x, 0, rapidUpdateDirection.y);
         public Pose ForwardPose => ForwardDirectionReference ? ForwardDirectionReference.GetPose() : transform.GetPose();
         public bool IsPaused => pausedMutex > 0;
+        public bool JumpPressedThisFrame => JumpAction != null && JumpAction.action.WasPressedThisFrame();
+        public bool IsSprintHeld => SprintAction != null && SprintAction.action.IsPressed();
 
 
         void Awake()

@@ -100,7 +100,6 @@ GameObject:
   m_Component:
   - component: {fileID: 6332613332206910487}
   - component: {fileID: 6745291940167334650}
-  - component: {fileID: 7056895653593663916}
   - component: {fileID: 852698230289373860}
   - component: {fileID: 1273733176568873465}
   - component: {fileID: 4834685619980346096}
@@ -127,6 +126,7 @@ Transform:
   - {fileID: 4341937642203223932}
   - {fileID: 5088146431326783153}
   - {fileID: 7067391727040078639}
+  - {fileID: 596498915619927008}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &6745291940167334650
@@ -144,11 +144,12 @@ MonoBehaviour:
   mainCollider: {fileID: 1944297055099908692}
   _rigidbody: {fileID: 1273733176568873465}
   _input: {fileID: 852698230289373860}
-  _groundedProvider: {fileID: 7056895653593663916}
   Acceleration: 90
-  topSpeed: 10
-  overrideGravity: 0
-  gravity: {x: 0, y: -9.81, z: 0}
+  TopSpeed: 10
+  SprintMultiplier: 1.5
+  UseStickyMovement: 0
+  OverrideGravity: 0
+  localRelativeGravity: {x: 0, y: -9.81, z: 0}
   AirStrength: 0.3
   SpeedAtSlopeAngle:
     serializedVersion: 2
@@ -157,43 +158,82 @@ MonoBehaviour:
       time: 30
       value: 1
       inSlope: Infinity
-      outSlope: -0.0925778
-      tangentMode: 1
+      outSlope: -0.05
+      tangentMode: 69
       weightedMode: 0
       inWeight: 0.33333334
       outWeight: 0.039739925
     - serializedVersion: 3
-      time: 60
+      time: 50
       value: 0
-      inSlope: -0.000071513365
+      inSlope: -0.05
       outSlope: Infinity
-      tangentMode: 1
+      tangentMode: 69
       weightedMode: 1
       inWeight: 0.4477469
       outWeight: 0.33333334
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &7056895653593663916
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3471702429840498631}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f0a0b974cc643034f82f1d3293ed93d4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Labyrinth.GroundedProvider
-  _movement: {fileID: 6745291940167334650}
-  RaycastSphereRadius: 0.3
+  SlopeDiagonalSpeed:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 136
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.1
+      value: 0.9
+      inSlope: 0.4000001
+      outSlope: 0.4000001
+      tangentMode: 136
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 136
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  JumpForce: 10
+  MultiJumpCount: 1
+  UprightDeltaAllowance: 0.0001
+  LerpPercentPerSec: 2
+  RaycastSphereRadius: 0.1
   MaxRaycastDistance: 1
   raycastOffset: -1
   GroundLayers:
     serializedVersion: 2
     m_Bits: 1
-  _grounded: 0
+  CheckForSteps: 1
+  MaxStepHeight: 0.5
+  LowerRaycastHeightPercentage: 0.023
+  StepCheckDistance: 1
+  StepSmoothingFactor: 1.5
+  DrawGroundCheck: 1
+  _grounded: 1
+  _isJumping: 0
+  _airJumpsRemaining: 0
+  _floorSlopeAdjustedDirection: {x: 0, y: 0, z: 0}
+  OnJump:
+    m_PersistentCalls:
+      m_Calls: []
+  OnLanding:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &852698230289373860
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -207,6 +247,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Labyrinth.PlayerMovementInput
   movementAction: {fileID: -1680190386980627800, guid: 052faaac586de48259a63d0c4782560b, type: 3}
+  JumpAction: {fileID: -2099379676528639254, guid: 052faaac586de48259a63d0c4782560b, type: 3}
+  SprintAction: {fileID: -7471211009204490832, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   ForwardDirectionReference: {fileID: 6332613332206910487}
   inputThreshold: 0.2
   rapidUpdateDirection: {x: 0, y: 0}
@@ -403,6 +445,66 @@ CapsuleCollider:
   m_Height: 1.8
   m_Direction: 1
   m_Center: {x: 0, y: -0.05, z: 0}
+--- !u!1 &6497456480902513704
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 596498915619927008}
+  - component: {fileID: 8075778187779725079}
+  m_Layer: 0
+  m_Name: Action Logic
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &596498915619927008
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6497456480902513704}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6332613332206910487}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8075778187779725079
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6497456480902513704}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e1d66056672537744af76e5ecb435670, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Labyrinth.MarkerPlacement
+  ReadyUpAction: {fileID: -6344457435451513691, guid: 052faaac586de48259a63d0c4782560b, type: 3}
+  MainAction: {fileID: 1120369429361536294, guid: 052faaac586de48259a63d0c4782560b, type: 3}
+  ChangeModeAction: {fileID: 0}
+  RotateAction: {fileID: 5873244518166080577, guid: 052faaac586de48259a63d0c4782560b, type: 3}
+  Pointer: {fileID: 4002019285863793711}
+  MarkerPrefab: {fileID: 2327128155958643542, guid: e19ce10a8c3ca4b4ead69dd184412cd4, type: 3}
+  ghostMaterial: {fileID: 0}
+  CameraFacingPlacement: 0
+  RaycastDistance: 2
+  DeleteRange: 0.2
+  PlacableSurfaces:
+    serializedVersion: 2
+    m_Bits: 1
+  OnStageChange:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &6856384004338492685
 GameObject:
   m_ObjectHideFlags: 0
